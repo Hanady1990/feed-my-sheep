@@ -311,6 +311,14 @@ const BiblePage = () => {
           </div>
         </>
       )}
+
+      {/* Word Search View */}
+      {view === "search" && (
+        <>
+          <SectionHeader title={t("bible.wordSearch")} subtitle={t("bible.title")} />
+          <BibleWordSearch onNavigate={handleSearchNavigate} />
+        </>
+      )}
     </div>
   );
 };
