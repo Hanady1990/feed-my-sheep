@@ -123,6 +123,11 @@ const BiblePage = () => {
         )}
 
         <Dialog open={gotoOpen} onOpenChange={setGotoOpen}>
+          <Button variant="outline" size="sm" className="gap-1.5 text-xs" onClick={() => setView("search")}>
+              <TextSearch className="h-3.5 w-3.5" />
+              {t("bible.wordSearch")}
+            </Button>
+
           <DialogTrigger asChild>
             <Button variant="outline" size="sm" className="gap-1.5 text-xs">
               <BookOpen className="h-3.5 w-3.5" />
