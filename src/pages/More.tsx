@@ -75,7 +75,7 @@ const MorePage = () => {
         )}
         {(isStandalone || isInstalled) && (
           <ContentCard className="flex items-center gap-3">
-            <Check className="h-5 w-5 text-green-600" />
+            <Check className="h-5 w-5 text-primary" />
             <span className="font-body text-sm text-foreground">{t("more.installApp")}</span>
             <span className="ms-auto font-body text-xs text-muted-foreground">{t("more.alreadyInstalled")}</span>
           </ContentCard>
