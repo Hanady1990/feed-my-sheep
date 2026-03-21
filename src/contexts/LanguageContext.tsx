@@ -227,6 +227,12 @@ const translations: Record<Language, Record<string, string>> = {
     "bible.verseOptional": "آية (اختياري)",
     "bible.goButton": "اذهب",
     "bible.searchBooks": "ابحث في الأسفار...",
+    "bible.searchVerses": "ابحث بالكلمات في الكتاب المقدس...",
+    "bible.searchButton": "بحث",
+    "bible.searching": "جارٍ البحث في جميع الأسفار…",
+    "bible.resultsFound": "نتيجة",
+    "bible.tooManyResults": "عرض أول 200 نتيجة. حاول بحثًا أكثر تحديدًا.",
+    "bible.wordSearch": "بحث بالكلمات",
 
     // Fathers
     "fathers.title": "آباء الكنيسة",

@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import SectionHeader from "@/components/SectionHeader";
 import ContentCard from "@/components/ContentCard";
-import { ChevronRight, ChevronLeft, ArrowLeft, ArrowRight, Search, BookOpen } from "lucide-react";
+import { ChevronRight, ChevronLeft, ArrowLeft, ArrowRight, Search, BookOpen, TextSearch } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { bibleBooks, oldTestamentIds, newTestamentIds } from "@/data/bible-meta";
 import { Input } from "@/components/ui/input";
@@ -9,11 +9,12 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import BibleWordSearch from "@/components/BibleWordSearch";
 
 type Verse = { v: number; t: string };
 type ChapterData = Record<string, Verse[]>;
 
-type View = "books" | "chapters" | "reader";
+type View = "books" | "chapters" | "reader" | "search";
 
 const BiblePage = () => {
   const { t, isRTL } = useLanguage();
