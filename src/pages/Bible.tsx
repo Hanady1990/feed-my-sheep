@@ -123,62 +123,63 @@ const BiblePage = () => {
         )}
 
         <div className="flex items-center gap-1.5">
-        <Dialog open={gotoOpen} onOpenChange={setGotoOpen}>
           <Button variant="outline" size="sm" className="gap-1.5 text-xs" onClick={() => setView("search")}>
-              <TextSearch className="h-3.5 w-3.5" />
-              {t("bible.wordSearch")}
-            </Button>
+            <TextSearch className="h-3.5 w-3.5" />
+            {t("bible.wordSearch")}
+          </Button>
 
-          <DialogTrigger asChild>
-            <Button variant="outline" size="sm" className="gap-1.5 text-xs">
-              <BookOpen className="h-3.5 w-3.5" />
-              {t("bible.goto")}
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-sm">
-            <DialogHeader>
-              <DialogTitle className="font-display">{t("bible.goto")}</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-3">
-              <Select value={gotoBook} onValueChange={(v) => { setGotoBook(v); setGotoChapter(""); setGotoVerse(""); }}>
-                <SelectTrigger><SelectValue placeholder={t("bible.selectBook")} /></SelectTrigger>
-                <SelectContent>
-                  <ScrollArea className="h-60">
-                    {bibleBooks.map(b => (
-                      <SelectItem key={b.id} value={String(b.id)}>{b.name}</SelectItem>
-                    ))}
-                  </ScrollArea>
-                </SelectContent>
-              </Select>
-              {selectedGotoBook && (
-                <Select value={gotoChapter} onValueChange={setGotoChapter}>
-                  <SelectTrigger><SelectValue placeholder={t("bible.selectChapter")} /></SelectTrigger>
+          <Dialog open={gotoOpen} onOpenChange={setGotoOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="sm" className="gap-1.5 text-xs">
+                <BookOpen className="h-3.5 w-3.5" />
+                {t("bible.goto")}
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-sm">
+              <DialogHeader>
+                <DialogTitle className="font-display">{t("bible.goto")}</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-3">
+                <Select value={gotoBook} onValueChange={(v) => { setGotoBook(v); setGotoChapter(""); setGotoVerse(""); }}>
+                  <SelectTrigger><SelectValue placeholder={t("bible.selectBook")} /></SelectTrigger>
                   <SelectContent>
-                    <ScrollArea className="h-48">
-                      {selectedGotoBook.chapters.map(c => (
-                        <SelectItem key={c.n} value={String(c.n)}>
-                          {t("bible.chapterLabel")} {c.n}
-                        </SelectItem>
+                    <ScrollArea className="h-60">
+                      {bibleBooks.map(b => (
+                        <SelectItem key={b.id} value={String(b.id)}>{b.name}</SelectItem>
                       ))}
                     </ScrollArea>
                   </SelectContent>
                 </Select>
-              )}
-              {gotoChapter && (
-                <Input
-                  type="number"
-                  min={1}
-                  placeholder={t("bible.verseOptional")}
-                  value={gotoVerse}
-                  onChange={e => setGotoVerse(e.target.value)}
-                />
-              )}
-              <Button onClick={handleGoto} disabled={!gotoBook || !gotoChapter} className="w-full">
-                {t("bible.goButton")}
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+                {selectedGotoBook && (
+                  <Select value={gotoChapter} onValueChange={setGotoChapter}>
+                    <SelectTrigger><SelectValue placeholder={t("bible.selectChapter")} /></SelectTrigger>
+                    <SelectContent>
+                      <ScrollArea className="h-48">
+                        {selectedGotoBook.chapters.map(c => (
+                          <SelectItem key={c.n} value={String(c.n)}>
+                            {t("bible.chapterLabel")} {c.n}
+                          </SelectItem>
+                        ))}
+                      </ScrollArea>
+                    </SelectContent>
+                  </Select>
+                )}
+                {gotoChapter && (
+                  <Input
+                    type="number"
+                    min={1}
+                    placeholder={t("bible.verseOptional")}
+                    value={gotoVerse}
+                    onChange={e => setGotoVerse(e.target.value)}
+                  />
+                )}
+                <Button onClick={handleGoto} disabled={!gotoBook || !gotoChapter} className="w-full">
+                  {t("bible.goButton")}
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
 
       {/* Books List View */}
