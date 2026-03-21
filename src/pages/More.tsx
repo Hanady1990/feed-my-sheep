@@ -1,9 +1,10 @@
 import SectionHeader from "@/components/SectionHeader";
 import ContentCard from "@/components/ContentCard";
 import { Link } from "react-router-dom";
-import { ScrollText, Users, Globe, Scale, Heart, Cross, BookmarkIcon, Share2, Languages, Moon, Sun } from "lucide-react";
+import { ScrollText, Users, Globe, Scale, Heart, Cross, BookmarkIcon, Share2, Languages, Moon, Sun, Download, Check } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Switch } from "@/components/ui/switch";
+import { usePwaInstall } from "@/hooks/use-pwa-install";
 
 const MorePage = () => {
   const { t, language, setLanguage, theme, setTheme } = useLanguage();
