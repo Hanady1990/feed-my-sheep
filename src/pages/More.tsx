@@ -8,6 +8,7 @@ import { usePwaInstall } from "@/hooks/use-pwa-install";
 
 const MorePage = () => {
   const { t, language, setLanguage, theme, setTheme } = useLanguage();
+  const { canPrompt, promptInstall, isStandalone, showIosGuide, isInstalled } = usePwaInstall();
 
   const moreLinks = [
     { to: "/fathers", icon: Users, label: t("more.fathersLibrary") },
