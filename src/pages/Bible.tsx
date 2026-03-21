@@ -79,7 +79,14 @@ const BiblePage = () => {
     } else if (view === "chapters") {
       setView("books");
       setSelectedBookId(null);
+    } else if (view === "search") {
+      setView("books");
     }
+  };
+
+  const handleSearchNavigate = (bookId: number, chapter: number, verse: number) => {
+    openBook(bookId);
+    openChapter(bookId, chapter, verse);
   };
 
   const handleGoto = async () => {
