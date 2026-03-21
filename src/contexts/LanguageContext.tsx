@@ -93,6 +93,12 @@ const translations: Record<Language, Record<string, string>> = {
     "bible.verseOptional": "Verse (optional)",
     "bible.goButton": "Go",
     "bible.searchBooks": "Search books...",
+    "bible.searchVerses": "Search words in the Bible...",
+    "bible.searchButton": "Search",
+    "bible.searching": "Searching all books…",
+    "bible.resultsFound": "results found",
+    "bible.tooManyResults": "Showing first 200 results. Try a more specific search.",
+    "bible.wordSearch": "Word Search",
 
     // Fathers
     "fathers.title": "Church Fathers",
@@ -221,6 +227,12 @@ const translations: Record<Language, Record<string, string>> = {
     "bible.verseOptional": "آية (اختياري)",
     "bible.goButton": "اذهب",
     "bible.searchBooks": "ابحث في الأسفار...",
+    "bible.searchVerses": "ابحث بالكلمات في الكتاب المقدس...",
+    "bible.searchButton": "بحث",
+    "bible.searching": "جارٍ البحث في جميع الأسفار…",
+    "bible.resultsFound": "نتيجة",
+    "bible.tooManyResults": "عرض أول 200 نتيجة. حاول بحثًا أكثر تحديدًا.",
+    "bible.wordSearch": "بحث بالكلمات",
 
     // Fathers
     "fathers.title": "آباء الكنيسة",
