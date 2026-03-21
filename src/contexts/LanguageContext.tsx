@@ -93,6 +93,12 @@ const translations: Record<Language, Record<string, string>> = {
     "bible.verseOptional": "Verse (optional)",
     "bible.goButton": "Go",
     "bible.searchBooks": "Search books...",
+    "bible.searchVerses": "Search words in the Bible...",
+    "bible.searchButton": "Search",
+    "bible.searching": "Searching all books…",
+    "bible.resultsFound": "results found",
+    "bible.tooManyResults": "Showing first 200 results. Try a more specific search.",
+    "bible.wordSearch": "Word Search",
 
     // Fathers
     "fathers.title": "Church Fathers",
