@@ -112,16 +112,17 @@ const BiblePage = () => {
   return (
     <div className="mx-auto max-w-2xl px-4 py-6">
       {/* Header with back button and go-to-verse */}
-      <div className="flex items-center justify-between mb-2">
+      <div className="flex items-center justify-between mb-2 gap-2">
         {view !== "books" ? (
-          <button onClick={goBack} className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <button onClick={goBack} className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors shrink-0">
             <Back className="h-4 w-4" />
-            {view === "reader" ? selectedBook?.name : t("bible.title")}
+            {view === "reader" ? selectedBook?.name : view === "search" ? t("bible.wordSearch") : t("bible.title")}
           </button>
         ) : (
           <div />
         )}
 
+        <div className="flex items-center gap-1.5">
         <Dialog open={gotoOpen} onOpenChange={setGotoOpen}>
           <Button variant="outline" size="sm" className="gap-1.5 text-xs" onClick={() => setView("search")}>
               <TextSearch className="h-3.5 w-3.5" />
