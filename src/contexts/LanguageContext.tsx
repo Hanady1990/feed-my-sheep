@@ -289,6 +289,15 @@ const translations: Record<Language, Record<string, string>> = {
     "more.heresiesThought": "البدع والفكر المسيحي",
     "more.socialTopics": "القضايا الاجتماعية المسيحية",
     "more.saintsSpirituality": "القديسين والروحانية",
+    "more.installApp": "تثبيت التطبيق",
+    "more.alreadyInstalled": "مثبّت",
+
+    // PWA
+    "pwa.title": "تثبيت كلمة الإيمان",
+    "pwa.description": "أضف التطبيق لشاشتك الرئيسية للوصول السريع والقراءة بدون إنترنت.",
+    "pwa.install": "تثبيت",
+    "pwa.iosGuide": "اضغط على زر المشاركة",
+    "pwa.addToHome": "إضافة للشاشة الرئيسية",
   },
 };
 

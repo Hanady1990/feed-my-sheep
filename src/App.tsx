@@ -26,6 +26,7 @@ const App = () => (
     <TooltipProvider>
       <LanguageProvider>
         <Sonner />
+        <PwaInstallBanner />
         <BrowserRouter>
           <Routes>
             <Route element={<AppLayout />}>

@@ -59,6 +59,27 @@ const MorePage = () => {
           <span className="font-body text-sm text-foreground">{t("more.bookmarks")}</span>
           <span className="ms-auto font-body text-xs text-muted-foreground">{t("more.comingSoon")}</span>
         </ContentCard>
+        {(canPrompt || showIosGuide) && !isStandalone && !isInstalled && (
+          <ContentCard
+            className="flex items-center gap-3 cursor-pointer hover:border-gold-light"
+            onClick={canPrompt ? promptInstall : undefined}
+          >
+            <Download className="h-5 w-5 text-gold" />
+            <span className="font-body text-sm text-foreground">{t("more.installApp")}</span>
+            {showIosGuide && (
+              <span className="ms-auto font-body text-xs text-muted-foreground">
+                Share → {t("pwa.addToHome")}
+              </span>
+            )}
+          </ContentCard>
+        )}
+        {(isStandalone || isInstalled) && (
+          <ContentCard className="flex items-center gap-3">
+            <Check className="h-5 w-5 text-green-600" />
+            <span className="font-body text-sm text-foreground">{t("more.installApp")}</span>
+            <span className="ms-auto font-body text-xs text-muted-foreground">{t("more.alreadyInstalled")}</span>
+          </ContentCard>
+        )}
         <ContentCard className="flex items-center gap-3">
           <Share2 className="h-5 w-5 text-gold" />
           <span className="font-body text-sm text-foreground">{t("more.share")}</span>
