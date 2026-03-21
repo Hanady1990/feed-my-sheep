@@ -4,14 +4,14 @@ import { usePwaInstall } from "@/hooks/use-pwa-install";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const PwaInstallBanner = () => {
-  const { canPrompt, promptInstall, isStandalone, showIosGuide, isInstalled } = usePwaInstall();
+  const { canPrompt, promptInstall, isStandalone, showIosGuide, showAndroidGuide, isInstalled } = usePwaInstall();
   const { t } = useLanguage();
   const [dismissed, setDismissed] = useState(() => {
     return sessionStorage.getItem("pwa-banner-dismissed") === "true";
   });
 
   if (isStandalone || isInstalled || dismissed) return null;
-  if (!canPrompt && !showIosGuide) return null;
+  if (!canPrompt && !showIosGuide && !showAndroidGuide) return null;
 
   const handleDismiss = () => {
     setDismissed(true);
@@ -44,6 +44,10 @@ const PwaInstallBanner = () => {
             {showIosGuide ? (
               <p className="mt-1 font-body text-xs text-muted-foreground leading-relaxed">
                 {t("pwa.iosGuide")} <Share className="inline h-3 w-3 -mt-0.5" /> → <strong>{t("pwa.addToHome")}</strong>
+              </p>
+            ) : showAndroidGuide ? (
+              <p className="mt-1 font-body text-xs text-muted-foreground leading-relaxed">
+                {t("pwa.androidGuide")}
               </p>
             ) : (
               <>

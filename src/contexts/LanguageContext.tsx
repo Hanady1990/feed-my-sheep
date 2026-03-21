@@ -155,6 +155,9 @@ const translations: Record<Language, Record<string, string>> = {
     "pwa.install": "Install",
     "pwa.iosGuide": "Tap the Share button",
     "pwa.addToHome": "Add to Home Screen",
+    "pwa.iosGuideToast": "Use Safari's Share menu to install the app",
+    "pwa.androidGuide": "Open the browser menu and tap Install app or Add to Home screen.",
+    "pwa.androidGuideToast": "Use the browser menu to install the app",
   },
   ar: {
     // App
@@ -298,6 +301,9 @@ const translations: Record<Language, Record<string, string>> = {
     "pwa.install": "تثبيت",
     "pwa.iosGuide": "اضغط على زر المشاركة",
     "pwa.addToHome": "إضافة للشاشة الرئيسية",
+    "pwa.iosGuideToast": "استخدم قائمة المشاركة في Safari لتثبيت التطبيق",
+    "pwa.androidGuide": "افتح قائمة المتصفح ثم اضغط تثبيت التطبيق أو إضافة إلى الشاشة الرئيسية.",
+    "pwa.androidGuideToast": "استخدم قائمة المتصفح لتثبيت التطبيق",
   },
 };
 
