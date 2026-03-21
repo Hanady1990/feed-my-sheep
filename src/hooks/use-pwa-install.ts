@@ -9,6 +9,7 @@ export function usePwaInstall() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstalled, setIsInstalled] = useState(false);
   const [isIos, setIsIos] = useState(false);
+  const [isAndroid, setIsAndroid] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false);
 
   useEffect(() => {
@@ -21,7 +22,9 @@ export function usePwaInstall() {
     // Detect iOS
     const ua = navigator.userAgent;
     const ios = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const android = /Android/i.test(ua);
     setIsIos(ios);
+    setIsAndroid(android);
 
     const handler = (e: Event) => {
       e.preventDefault();
@@ -48,6 +51,7 @@ export function usePwaInstall() {
 
   const canPrompt = !!deferredPrompt;
   const showIosGuide = isIos && !isStandalone;
+  const showAndroidGuide = isAndroid && !isStandalone && !canPrompt;
 
-  return { canPrompt, promptInstall, isInstalled, isStandalone, showIosGuide, isIos };
+  return { canPrompt, promptInstall, isInstalled, isStandalone, showIosGuide, showAndroidGuide, isIos, isAndroid };
 }

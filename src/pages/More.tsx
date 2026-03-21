@@ -5,10 +5,31 @@ import { ScrollText, Users, Globe, Scale, Heart, Cross, BookmarkIcon, Share2, La
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Switch } from "@/components/ui/switch";
 import { usePwaInstall } from "@/hooks/use-pwa-install";
+import { toast } from "sonner";
 
 const MorePage = () => {
   const { t, language, setLanguage, theme, setTheme } = useLanguage();
-  const { canPrompt, promptInstall, isStandalone, showIosGuide, isInstalled } = usePwaInstall();
+  const { canPrompt, promptInstall, isStandalone, showIosGuide, showAndroidGuide, isInstalled } = usePwaInstall();
+
+  const handleInstallClick = async () => {
+    if (canPrompt) {
+      await promptInstall();
+      return;
+    }
+
+    if (showIosGuide) {
+      toast(t("pwa.iosGuideToast"), {
+        description: `${t("pwa.iosGuide")} → ${t("pwa.addToHome")}`,
+      });
+      return;
+    }
+
+    if (showAndroidGuide) {
+      toast(t("pwa.androidGuideToast"), {
+        description: t("pwa.androidGuide"),
+      });
+    }
+  };
 
   const moreLinks = [
     { to: "/fathers", icon: Users, label: t("more.fathersLibrary") },
@@ -59,16 +80,21 @@ const MorePage = () => {
           <span className="font-body text-sm text-foreground">{t("more.bookmarks")}</span>
           <span className="ms-auto font-body text-xs text-muted-foreground">{t("more.comingSoon")}</span>
         </ContentCard>
-        {(canPrompt || showIosGuide) && !isStandalone && !isInstalled && (
+        {(canPrompt || showIosGuide || showAndroidGuide) && !isStandalone && !isInstalled && (
           <ContentCard
             className="flex items-center gap-3 cursor-pointer hover:border-gold-light"
-            onClick={canPrompt ? promptInstall : undefined}
+            onClick={handleInstallClick}
           >
             <Download className="h-5 w-5 text-gold" />
             <span className="font-body text-sm text-foreground">{t("more.installApp")}</span>
             {showIosGuide && (
               <span className="ms-auto font-body text-xs text-muted-foreground">
                 Share → {t("pwa.addToHome")}
+              </span>
+            )}
+            {showAndroidGuide && !showIosGuide && (
+              <span className="ms-auto font-body text-xs text-muted-foreground">
+                {t("pwa.install")}
               </span>
             )}
           </ContentCard>
