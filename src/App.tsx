@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import AppLayout from "@/components/AppLayout";
+import PwaInstallBanner from "@/components/PwaInstallBanner";
 import Index from "./pages/Index";
 import TeachingsPage from "./pages/Teachings";
 import BiblePage from "./pages/Bible";
