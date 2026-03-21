@@ -146,6 +146,15 @@ const translations: Record<Language, Record<string, string>> = {
     "more.heresiesThought": "Heresies & Christian Thought",
     "more.socialTopics": "Social Christian Topics",
     "more.saintsSpirituality": "Saints & Spirituality",
+    "more.installApp": "Install App",
+    "more.alreadyInstalled": "Installed",
+
+    // PWA
+    "pwa.title": "Install Verbum Fidei",
+    "pwa.description": "Add to your home screen for quick access and offline reading.",
+    "pwa.install": "Install",
+    "pwa.iosGuide": "Tap the Share button",
+    "pwa.addToHome": "Add to Home Screen",
   },
   ar: {
     // App
@@ -280,6 +289,15 @@ const translations: Record<Language, Record<string, string>> = {
     "more.heresiesThought": "البدع والفكر المسيحي",
     "more.socialTopics": "القضايا الاجتماعية المسيحية",
     "more.saintsSpirituality": "القديسين والروحانية",
+    "more.installApp": "تثبيت التطبيق",
+    "more.alreadyInstalled": "مثبّت",
+
+    // PWA
+    "pwa.title": "تثبيت كلمة الإيمان",
+    "pwa.description": "أضف التطبيق لشاشتك الرئيسية للوصول السريع والقراءة بدون إنترنت.",
+    "pwa.install": "تثبيت",
+    "pwa.iosGuide": "اضغط على زر المشاركة",
+    "pwa.addToHome": "إضافة للشاشة الرئيسية",
   },
 };
 

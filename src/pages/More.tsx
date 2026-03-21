@@ -1,12 +1,14 @@
 import SectionHeader from "@/components/SectionHeader";
 import ContentCard from "@/components/ContentCard";
 import { Link } from "react-router-dom";
-import { ScrollText, Users, Globe, Scale, Heart, Cross, BookmarkIcon, Share2, Languages, Moon, Sun } from "lucide-react";
+import { ScrollText, Users, Globe, Scale, Heart, Cross, BookmarkIcon, Share2, Languages, Moon, Sun, Download, Check } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Switch } from "@/components/ui/switch";
+import { usePwaInstall } from "@/hooks/use-pwa-install";
 
 const MorePage = () => {
   const { t, language, setLanguage, theme, setTheme } = useLanguage();
+  const { canPrompt, promptInstall, isStandalone, showIosGuide, isInstalled } = usePwaInstall();
 
   const moreLinks = [
     { to: "/fathers", icon: Users, label: t("more.fathersLibrary") },
@@ -57,6 +59,27 @@ const MorePage = () => {
           <span className="font-body text-sm text-foreground">{t("more.bookmarks")}</span>
           <span className="ms-auto font-body text-xs text-muted-foreground">{t("more.comingSoon")}</span>
         </ContentCard>
+        {(canPrompt || showIosGuide) && !isStandalone && !isInstalled && (
+          <ContentCard
+            className="flex items-center gap-3 cursor-pointer hover:border-gold-light"
+            onClick={canPrompt ? promptInstall : undefined}
+          >
+            <Download className="h-5 w-5 text-gold" />
+            <span className="font-body text-sm text-foreground">{t("more.installApp")}</span>
+            {showIosGuide && (
+              <span className="ms-auto font-body text-xs text-muted-foreground">
+                Share → {t("pwa.addToHome")}
+              </span>
+            )}
+          </ContentCard>
+        )}
+        {(isStandalone || isInstalled) && (
+          <ContentCard className="flex items-center gap-3">
+            <Check className="h-5 w-5 text-primary" />
+            <span className="font-body text-sm text-foreground">{t("more.installApp")}</span>
+            <span className="ms-auto font-body text-xs text-muted-foreground">{t("more.alreadyInstalled")}</span>
+          </ContentCard>
+        )}
         <ContentCard className="flex items-center gap-3">
           <Share2 className="h-5 w-5 text-gold" />
           <span className="font-body text-sm text-foreground">{t("more.share")}</span>
