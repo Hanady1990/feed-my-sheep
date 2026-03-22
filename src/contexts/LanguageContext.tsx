@@ -30,6 +30,7 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.heresies": "Heresies",
     "nav.social": "Social Topics",
     "nav.saints": "Saints",
+    "nav.catechism": "Catechism",
 
     // Home
     "home.dailyGospel": "Daily Gospel",
@@ -99,6 +100,20 @@ const translations: Record<Language, Record<string, string>> = {
     "bible.resultsFound": "results found",
     "bible.tooManyResults": "Showing first 200 results. Try a more specific search.",
     "bible.wordSearch": "Word Search",
+
+    // Catechism
+    "catechism.title": "Catechism",
+    "catechism.subtitle": "Catechism of the Catholic Church",
+    "catechism.gotoPlaceholder": "Go to § number (1–2865)",
+    "catechism.search": "Search",
+    "catechism.searchSubtitle": "Search across all paragraphs",
+    "catechism.searchPlaceholder": "Search the Catechism...",
+    "catechism.searchBtn": "Search",
+    "catechism.searching": "Searching…",
+    "catechism.resultsFound": "results found",
+    "catechism.tooMany": "Showing first 200 results.",
+    "catechism.noResults": "No results found.",
+    "catechism.tableOfContents": "Table of Contents",
 
     // Fathers
     "fathers.title": "Church Fathers",
@@ -176,6 +191,7 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.heresies": "البدع",
     "nav.social": "قضايا اجتماعية",
     "nav.saints": "القديسين",
+    "nav.catechism": "التعليم المسيحي",
 
     // Home
     "home.dailyGospel": "إنجيل اليوم",
@@ -245,6 +261,20 @@ const translations: Record<Language, Record<string, string>> = {
     "bible.resultsFound": "نتيجة",
     "bible.tooManyResults": "عرض أول 200 نتيجة. حاول بحثًا أكثر تحديدًا.",
     "bible.wordSearch": "بحث بالكلمات",
+
+    // Catechism
+    "catechism.title": "التعليم المسيحي",
+    "catechism.subtitle": "التعليم المسيحي للكنيسة الكاثوليكية",
+    "catechism.gotoPlaceholder": "اذهب إلى § رقم (١–٢٨٦٥)",
+    "catechism.search": "بحث",
+    "catechism.searchSubtitle": "البحث في جميع الفقرات",
+    "catechism.searchPlaceholder": "ابحث في التعليم المسيحي...",
+    "catechism.searchBtn": "بحث",
+    "catechism.searching": "جارٍ البحث…",
+    "catechism.resultsFound": "نتيجة",
+    "catechism.tooMany": "عرض أول 200 نتيجة.",
+    "catechism.noResults": "لا توجد نتائج.",
+    "catechism.tableOfContents": "الفهرس",
 
     // Fathers
     "fathers.title": "آباء الكنيسة",
