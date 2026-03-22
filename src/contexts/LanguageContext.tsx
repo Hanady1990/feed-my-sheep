@@ -114,6 +114,8 @@ const translations: Record<Language, Record<string, string>> = {
     "catechism.tooMany": "Showing first 200 results.",
     "catechism.noResults": "No results found.",
     "catechism.tableOfContents": "Table of Contents",
+    "catechism.back": "Back",
+    "catechism.readAll": "Read all paragraphs in this section",
 
     // Fathers
     "fathers.title": "Church Fathers",
@@ -275,6 +277,8 @@ const translations: Record<Language, Record<string, string>> = {
     "catechism.tooMany": "عرض أول 200 نتيجة.",
     "catechism.noResults": "لا توجد نتائج.",
     "catechism.tableOfContents": "الفهرس",
+    "catechism.back": "رجوع",
+    "catechism.readAll": "قراءة جميع فقرات هذا القسم",
 
     // Fathers
     "fathers.title": "آباء الكنيسة",

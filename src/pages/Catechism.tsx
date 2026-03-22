@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import SectionHeader from "@/components/SectionHeader";
-import { ChevronRight, ChevronLeft, ArrowLeft, ArrowRight, Search, BookOpen, Hash } from "lucide-react";
+import { ChevronRight, ChevronLeft, ArrowLeft, ArrowRight, Search, BookOpen, Hash, FolderOpen } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,53 @@ const PARTS = [
   { key: "part4", range: [2558, 2865] as const, en: "Part Four: Christian Prayer", ar: "الجزء الرابع: الصلاة المسيحية" },
 ];
 
+// Build a tree from flat TOC entries within a given range
+type TocNode = TocEntry & { children: TocNode[] };
+
+function buildTree(entries: TocEntry[]): TocNode[] {
+  const nodes: TocNode[] = entries.map(e => ({ ...e, children: [] }));
+  const stack: TocNode[] = [];
+  const roots: TocNode[] = [];
+
+  for (const node of nodes) {
+    // Pop stack until we find a parent with lower level
+    while (stack.length > 0 && stack[stack.length - 1].level >= node.level) {
+      stack.pop();
+    }
+    if (stack.length > 0) {
+      stack[stack.length - 1].children.push(node);
+    } else {
+      roots.push(node);
+    }
+    stack.push(node);
+  }
+  return roots;
+}
+
+function getChildrenForRange(toc: TocEntry[], parentRange: [number, number], parentLevel: number): TocEntry[] {
+  return toc.filter(entry => {
+    if (entry.range[0] === 0 && entry.range[1] === 0) return false; // skip placeholder entries
+    // Entry must be within the parent's range
+    const withinRange = entry.range[0] >= parentRange[0] && entry.range[1] <= parentRange[1];
+    // Entry must be a direct child level
+    const isDirectChild = entry.level === parentLevel + 1;
+    return withinRange && isDirectChild;
+  });
+}
+
+function getDescendantsAtNextLevel(toc: TocEntry[], parentRange: [number, number], parentLevel: number): TocEntry[] {
+  // Find entries within the parent range at any level deeper
+  const within = toc.filter(entry => {
+    if (entry.range[0] === 0 && entry.range[1] === 0) return false;
+    return entry.range[0] >= parentRange[0] && entry.range[1] <= parentRange[1] && entry.level > parentLevel;
+  });
+  if (within.length === 0) return [];
+  
+  // Find the minimum level among descendants
+  const minLevel = Math.min(...within.map(e => e.level));
+  return within.filter(e => e.level === minLevel);
+}
+
 const CatechismPage = () => {
   const { t, isRTL, language } = useLanguage();
   const Chevron = isRTL ? ChevronLeft : ChevronRight;
@@ -34,6 +81,9 @@ const CatechismPage = () => {
   const [loading, setLoading] = useState(false);
   const [currentRange, setCurrentRange] = useState<[number, number] | null>(null);
   const [highlightParagraph, setHighlightParagraph] = useState<number | null>(null);
+  
+  // Navigation stack for drill-down
+  const [navStack, setNavStack] = useState<{ name: string; arabicName: string; range: [number, number]; level: number }[]>([]);
 
   // Search state
   const [searchQuery, setSearchQuery] = useState("");
@@ -51,31 +101,95 @@ const CatechismPage = () => {
       .catch(console.error);
   }, []);
 
-  const loadParagraphs = useCallback(async (partKey: string, lang: string) => {
+  const loadParagraphs = useCallback(async (range: [number, number]) => {
     setLoading(true);
     try {
-      const suffix = lang === "ar" ? "ar" : "en";
-      const res = await fetch(`/catechism/${partKey}_${suffix}.json`);
-      const data = await res.json();
-      setParagraphs(data);
+      const suffix = language === "ar" ? "ar" : "en";
+      // Determine which part files to load based on the range
+      const neededParts = PARTS.filter(p => p.range[0] <= range[1] && p.range[1] >= range[0]);
+      const allData: Record<string, string> = {};
+      for (const part of neededParts) {
+        const res = await fetch(`/catechism/${part.key}_${suffix}.json`);
+        const data = await res.json();
+        // Only include paragraphs within our range
+        for (const [num, text] of Object.entries(data)) {
+          const n = parseInt(num);
+          if (n >= range[0] && n <= range[1]) {
+            allData[num] = text as string;
+          }
+        }
+      }
+      setParagraphs(allData);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [language]);
 
-  const openPart = useCallback(async (partKey: string, range: [number, number], scrollTo?: number) => {
-    await loadParagraphs(partKey, language);
-    setCurrentRange(range);
-    setHighlightParagraph(scrollTo || null);
-    setView("reader");
-  }, [loadParagraphs, language]);
+  // Get current children to display
+  const getCurrentChildren = useCallback((): TocEntry[] => {
+    if (navStack.length === 0) return [];
+    const current = navStack[navStack.length - 1];
+    return getDescendantsAtNextLevel(toc, current.range, current.level);
+  }, [navStack, toc]);
+
+  const openSection = useCallback(async (entry: { name: string; arabicName: string; range: [number, number]; level: number }, replace = false) => {
+    const newStack = replace ? [entry] : [...navStack, entry];
+    setNavStack(newStack);
+    
+    // Check if this entry has children
+    const children = getDescendantsAtNextLevel(toc, entry.range, entry.level);
+    
+    if (children.length === 0) {
+      // Leaf node - show paragraphs
+      await loadParagraphs(entry.range);
+      setCurrentRange(entry.range);
+      setHighlightParagraph(null);
+      setView("reader");
+    } else {
+      // Has children - show navigation
+      setView("toc");
+    }
+  }, [navStack, toc, loadParagraphs]);
+
+  const goBack = useCallback(() => {
+    if (navStack.length <= 1) {
+      setNavStack([]);
+      setView("toc");
+      return;
+    }
+    const newStack = navStack.slice(0, -1);
+    setNavStack(newStack);
+    setView("toc");
+  }, [navStack]);
 
   // Navigate to paragraph number
   const goToParagraph = useCallback(async (num: number) => {
     const part = PARTS.find(p => num >= p.range[0] && num <= p.range[1]);
     if (!part) return;
-    await openPart(part.key, [...part.range] as [number, number], num);
-  }, [openPart]);
+    
+    // Build navigation path from TOC
+    const path: TocEntry[] = [];
+    // Find the part-level entry
+    const partEntry = toc.find(e => e.level === 1 && e.range[0] === part.range[0]);
+    if (partEntry) path.push(partEntry);
+    
+    // Find the deepest leaf that contains this paragraph
+    let currentEntries = partEntry ? getDescendantsAtNextLevel(toc, partEntry.range, partEntry.level) : [];
+    while (currentEntries.length > 0) {
+      const match = currentEntries.find(e => num >= e.range[0] && num <= e.range[1]);
+      if (!match) break;
+      path.push(match);
+      currentEntries = getDescendantsAtNextLevel(toc, match.range, match.level);
+    }
+    
+    // Open the last entry in path as reader
+    const target = path[path.length - 1] || { name: part.en, arabicName: part.ar, range: [...part.range] as [number, number], level: 1 };
+    setNavStack(path);
+    await loadParagraphs(target.range as [number, number]);
+    setCurrentRange(target.range as [number, number]);
+    setHighlightParagraph(num);
+    setView("reader");
+  }, [toc, loadParagraphs]);
 
   // Search all paragraphs
   const handleSearch = useCallback(async () => {
@@ -115,12 +229,9 @@ const CatechismPage = () => {
 
   const handleGoTo = () => {
     const num = parseInt(gotoNum);
-    if (num >= 1 && num <= 2865) {
-      goToParagraph(num);
-    }
+    if (num >= 1 && num <= 2865) goToParagraph(num);
   };
 
-  // Highlight matching text in search results
   const highlightMatch = (text: string) => {
     if (!searchQuery.trim()) return text;
     const q = searchQuery.trim();
@@ -140,89 +251,63 @@ const CatechismPage = () => {
     );
   };
 
-  // ── TOC View ──
-  if (view === "toc") {
+  const getLevelStyle = (level: number) => {
+    switch (level) {
+      case 1: return "font-bold text-base text-foreground";
+      case 2: return "font-semibold text-sm text-foreground";
+      case 3: return "font-semibold text-sm text-foreground";
+      case 4: return "font-medium text-sm text-foreground";
+      case 5: return "font-medium text-sm text-muted-foreground";
+      default: return "text-sm text-muted-foreground";
+    }
+  };
+
+  const getLevelIcon = (level: number, hasChildren: boolean) => {
+    if (hasChildren) return <FolderOpen className="h-3.5 w-3.5 text-muted-foreground shrink-0" />;
+    return <BookOpen className="h-3.5 w-3.5 text-muted-foreground shrink-0" />;
+  };
+
+  // Breadcrumb
+  const renderBreadcrumb = () => {
+    if (navStack.length === 0) return null;
     return (
-      <div className="animate-fade-in">
-        <SectionHeader title={t("catechism.title")} subtitle={t("catechism.subtitle")} />
-
-        {/* Go to paragraph + Search */}
-        <div className="flex gap-2 mb-4">
-          <div className="flex gap-1 flex-1">
-            <Input
-              type="number"
-              min={1}
-              max={2865}
-              placeholder={t("catechism.gotoPlaceholder")}
-              value={gotoNum}
-              onChange={e => setGotoNum(e.target.value)}
-              onKeyDown={e => e.key === "Enter" && handleGoTo()}
-              className="flex-1"
-            />
-            <Button size="sm" variant="outline" onClick={handleGoTo}>
-              <Hash className="h-4 w-4" />
-            </Button>
-          </div>
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={() => setView("search")}
-            className="gap-1"
-          >
-            <Search className="h-4 w-4" />
-            <span className="hidden sm:inline">{t("catechism.search")}</span>
-          </Button>
-        </div>
-
-        {/* Parts */}
-        <div className="space-y-2">
-          {PARTS.map(part => (
+      <div className="flex items-center gap-1 flex-wrap mb-4">
+        <button
+          onClick={() => { setNavStack([]); setView("toc"); setHighlightParagraph(null); }}
+          className="text-xs text-primary hover:underline transition-colors"
+        >
+          {t("catechism.title")}
+        </button>
+        {navStack.map((entry, i) => (
+          <span key={i} className="flex items-center gap-1">
+            <span className="text-xs text-muted-foreground">/</span>
             <button
-              key={part.key}
-              onClick={() => openPart(part.key, [...part.range] as [number, number])}
-              className="w-full flex items-center justify-between rounded-lg border border-border bg-card p-4 text-start transition-all hover:shadow-md active:scale-[0.98]"
+              onClick={() => {
+                const newStack = navStack.slice(0, i + 1);
+                setNavStack(newStack);
+                const children = getDescendantsAtNextLevel(toc, entry.range, entry.level);
+                if (children.length > 0) {
+                  setView("toc");
+                } else {
+                  loadParagraphs(entry.range).then(() => {
+                    setCurrentRange(entry.range);
+                    setHighlightParagraph(null);
+                    setView("reader");
+                  });
+                }
+              }}
+              className={`text-xs transition-colors max-w-[140px] truncate ${
+                i === navStack.length - 1 ? "text-foreground font-medium" : "text-primary hover:underline"
+              }`}
+              title={language === "ar" ? entry.arabicName : entry.name}
             >
-              <div className="flex-1 min-w-0">
-                <p className="font-display text-sm font-semibold text-foreground leading-snug">
-                  {language === "ar" ? part.ar : part.en}
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  §{part.range[0]} – §{part.range[1]}
-                </p>
-              </div>
-              <Chevron className="h-4 w-4 text-muted-foreground shrink-0" />
+              {language === "ar" ? entry.arabicName : entry.name}
             </button>
-          ))}
-        </div>
-
-        {/* TOC sections */}
-        {toc.length > 0 && (
-          <div className="mt-6">
-            <h3 className="font-display text-sm font-semibold text-foreground mb-3">{t("catechism.tableOfContents")}</h3>
-            <ScrollArea className="h-[400px] rounded-lg border border-border bg-card">
-              <div className="p-3 space-y-0.5">
-                {toc
-                  .filter(entry => entry.level <= 3)
-                  .map((entry, i) => (
-                  <button
-                    key={i}
-                    onClick={() => goToParagraph(entry.range[0])}
-                    className="w-full text-start rounded px-2 py-1.5 text-xs transition-colors hover:bg-muted active:scale-[0.98]"
-                    style={{ paddingInlineStart: `${(entry.level - 1) * 12 + 8}px` }}
-                  >
-                    <span className={entry.level === 1 ? "font-semibold text-foreground" : "text-muted-foreground"}>
-                      {language === "ar" ? entry.arabicName : entry.name}
-                    </span>
-                    <span className="text-muted-foreground/60 ml-2 tabular-nums">§{entry.range[0]}</span>
-                  </button>
-                ))}
-              </div>
-            </ScrollArea>
-          </div>
-        )}
+          </span>
+        ))}
       </div>
     );
-  }
+  };
 
   // ── Search View ──
   if (view === "search") {
@@ -238,10 +323,7 @@ const CatechismPage = () => {
 
         <SectionHeader title={t("catechism.search")} subtitle={t("catechism.searchSubtitle")} />
 
-        <form
-          onSubmit={e => { e.preventDefault(); handleSearch(); }}
-          className="flex gap-2 mb-4"
-        >
+        <form onSubmit={e => { e.preventDefault(); handleSearch(); }} className="flex gap-2 mb-4">
           <Input
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
@@ -253,9 +335,7 @@ const CatechismPage = () => {
           </Button>
         </form>
 
-        {searching && (
-          <p className="text-sm text-muted-foreground animate-pulse">{t("catechism.searching")}</p>
-        )}
+        {searching && <p className="text-sm text-muted-foreground animate-pulse">{t("catechism.searching")}</p>}
 
         {!searching && searchResults.length > 0 && (
           <div>
@@ -272,9 +352,7 @@ const CatechismPage = () => {
                     className="w-full text-start rounded-md p-3 hover:bg-muted transition-colors active:scale-[0.98]"
                   >
                     <span className="text-xs font-semibold text-primary tabular-nums">§{r.num}</span>
-                    <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
-                      {highlightMatch(r.text)}
-                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{highlightMatch(r.text)}</p>
                   </button>
                 ))}
               </div>
@@ -290,83 +368,171 @@ const CatechismPage = () => {
   }
 
   // ── Reader View ──
-  const currentPart = currentRange ? PARTS.find(p => p.range[0] === currentRange[0]) : null;
-  const paragraphNums = Object.keys(paragraphs).map(Number).sort((a, b) => a - b);
+  if (view === "reader") {
+    const paragraphNums = Object.keys(paragraphs).map(Number).sort((a, b) => a - b);
+    const currentEntry = navStack.length > 0 ? navStack[navStack.length - 1] : null;
+
+    return (
+      <div className="animate-fade-in">
+        <button
+          onClick={goBack}
+          className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-2 transition-colors active:scale-[0.97]"
+        >
+          <Back className="h-4 w-4" />
+          {t("catechism.back")}
+        </button>
+
+        {renderBreadcrumb()}
+
+        {currentEntry && (
+          <SectionHeader
+            title={language === "ar" ? currentEntry.arabicName : currentEntry.name}
+            subtitle={`§${currentEntry.range[0]} – §${currentEntry.range[1]}`}
+          />
+        )}
+
+        {loading ? (
+          <div className="flex justify-center py-12">
+            <BookOpen className="h-8 w-8 text-muted-foreground animate-pulse" />
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {paragraphNums.map(num => (
+              <div
+                key={num}
+                ref={num === highlightParagraph ? highlightRef : undefined}
+                className={`rounded-lg border p-4 transition-all ${
+                  num === highlightParagraph
+                    ? "border-primary/40 bg-primary/5 shadow-sm"
+                    : "border-border bg-card"
+                }`}
+              >
+                <span className="inline-block text-xs font-semibold text-primary tabular-nums mb-1">§{num}</span>
+                <p className="font-body text-sm leading-relaxed text-foreground whitespace-pre-line">
+                  {paragraphs[String(num)]}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ── TOC View (with drill-down) ──
+  const isRoot = navStack.length === 0;
+  const currentEntry = isRoot ? null : navStack[navStack.length - 1];
+  const children = isRoot ? [] : getCurrentChildren();
 
   return (
     <div className="animate-fade-in">
-      <button
-        onClick={() => { setView("toc"); setHighlightParagraph(null); }}
-        className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4 transition-colors active:scale-[0.97]"
-      >
-        <Back className="h-4 w-4" />
-        {t("catechism.title")}
-      </button>
-
-      {currentPart && (
-        <SectionHeader
-          title={language === "ar" ? currentPart.ar : currentPart.en}
-          subtitle={`§${currentPart.range[0]} – §${currentPart.range[1]}`}
-        />
+      {!isRoot && (
+        <button
+          onClick={goBack}
+          className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-2 transition-colors active:scale-[0.97]"
+        >
+          <Back className="h-4 w-4" />
+          {t("catechism.back")}
+        </button>
       )}
 
-      {loading ? (
-        <div className="flex justify-center py-12">
-          <BookOpen className="h-8 w-8 text-muted-foreground animate-pulse" />
-        </div>
-      ) : (
-        <div className="space-y-4">
-          {paragraphNums.map(num => (
-            <div
-              key={num}
-              ref={num === highlightParagraph ? highlightRef : undefined}
-              className={`rounded-lg border p-4 transition-all ${
-                num === highlightParagraph
-                  ? "border-primary/40 bg-primary/5 shadow-sm"
-                  : "border-border bg-card"
-              }`}
-            >
-              <span className="inline-block text-xs font-semibold text-primary tabular-nums mb-1">§{num}</span>
-              <p className="font-body text-sm leading-relaxed text-foreground whitespace-pre-line">
-                {paragraphs[String(num)]}
-              </p>
-            </div>
-          ))}
+      {renderBreadcrumb()}
+
+      <SectionHeader
+        title={isRoot ? t("catechism.title") : (language === "ar" ? currentEntry!.arabicName : currentEntry!.name)}
+        subtitle={isRoot ? t("catechism.subtitle") : `§${currentEntry!.range[0]} – §${currentEntry!.range[1]}`}
+      />
+
+      {/* Go to paragraph + Search (only at root) */}
+      {isRoot && (
+        <div className="flex gap-2 mb-4">
+          <div className="flex gap-1 flex-1">
+            <Input
+              type="number"
+              min={1}
+              max={2865}
+              placeholder={t("catechism.gotoPlaceholder")}
+              value={gotoNum}
+              onChange={e => setGotoNum(e.target.value)}
+              onKeyDown={e => e.key === "Enter" && handleGoTo()}
+              className="flex-1"
+            />
+            <Button size="sm" variant="outline" onClick={handleGoTo}>
+              <Hash className="h-4 w-4" />
+            </Button>
+          </div>
+          <Button size="sm" variant="outline" onClick={() => setView("search")} className="gap-1">
+            <Search className="h-4 w-4" />
+            <span className="hidden sm:inline">{t("catechism.search")}</span>
+          </Button>
         </div>
       )}
 
-      {/* Part navigation */}
-      {currentPart && (
-        <div className="flex justify-between mt-6 gap-2">
-          {PARTS.indexOf(currentPart) > 0 && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                const prev = PARTS[PARTS.indexOf(currentPart) - 1];
-                openPart(prev.key, [...prev.range] as [number, number]);
-              }}
-              className="gap-1"
-            >
-              <Back className="h-3 w-3" />
-              {language === "ar" ? PARTS[PARTS.indexOf(currentPart) - 1].ar.slice(0, 20) : PARTS[PARTS.indexOf(currentPart) - 1].en.slice(0, 20)}…
-            </Button>
-          )}
-          <div className="flex-1" />
-          {PARTS.indexOf(currentPart) < PARTS.length - 1 && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                const next = PARTS[PARTS.indexOf(currentPart) + 1];
-                openPart(next.key, [...next.range] as [number, number]);
-              }}
-              className="gap-1"
-            >
-              {language === "ar" ? PARTS[PARTS.indexOf(currentPart) + 1].ar.slice(0, 20) : PARTS[PARTS.indexOf(currentPart) + 1].en.slice(0, 20)}…
-              <Chevron className="h-3 w-3" />
-            </Button>
-          )}
+      {/* Root: Show parts */}
+      {isRoot && (
+        <div className="space-y-2">
+          {PARTS.map(part => {
+            const partTocEntry = toc.find(e => e.level === 1 && e.range[0] === part.range[0]);
+            return (
+              <button
+                key={part.key}
+                onClick={() => openSection({
+                  name: partTocEntry?.name || part.en,
+                  arabicName: partTocEntry?.arabicName || part.ar,
+                  range: [...part.range] as [number, number],
+                  level: 1,
+                }, true)}
+                className="w-full flex items-center justify-between rounded-lg border border-border bg-card p-4 text-start transition-all hover:shadow-md active:scale-[0.98]"
+              >
+                <div className="flex-1 min-w-0">
+                  <p className="font-display text-sm font-semibold text-foreground leading-snug">
+                    {language === "ar" ? (partTocEntry?.arabicName || part.ar) : (partTocEntry?.name || part.en)}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">§{part.range[0]} – §{part.range[1]}</p>
+                </div>
+                <Chevron className="h-4 w-4 text-muted-foreground shrink-0" />
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Drill-down: Show children of current entry */}
+      {!isRoot && children.length > 0 && (
+        <div className="space-y-1.5">
+          {/* Option to read all paragraphs in this section */}
+          <button
+            onClick={async () => {
+              await loadParagraphs(currentEntry!.range);
+              setCurrentRange(currentEntry!.range);
+              setHighlightParagraph(null);
+              setView("reader");
+            }}
+            className="w-full flex items-center gap-3 rounded-lg border border-dashed border-primary/30 bg-primary/5 p-3 text-start transition-all hover:bg-primary/10 active:scale-[0.98] mb-2"
+          >
+            <BookOpen className="h-4 w-4 text-primary shrink-0" />
+            <span className="text-sm font-medium text-primary">{t("catechism.readAll")}</span>
+          </button>
+
+          {children.map((child, i) => {
+            const hasSubChildren = getDescendantsAtNextLevel(toc, child.range, child.level).length > 0;
+            return (
+              <button
+                key={i}
+                onClick={() => openSection(child)}
+                className="w-full flex items-center gap-3 rounded-lg border border-border bg-card p-3.5 text-start transition-all hover:shadow-md active:scale-[0.98]"
+              >
+                {getLevelIcon(child.level, hasSubChildren)}
+                <div className="flex-1 min-w-0">
+                  <p className={getLevelStyle(child.level) + " leading-snug"}>
+                    {language === "ar" ? child.arabicName : child.name}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-0.5 tabular-nums">§{child.range[0]} – §{child.range[1]}</p>
+                </div>
+                <Chevron className="h-4 w-4 text-muted-foreground shrink-0" />
+              </button>
+            );
+          })}
         </div>
       )}
     </div>
