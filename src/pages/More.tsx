@@ -1,7 +1,7 @@
 import SectionHeader from "@/components/SectionHeader";
 import ContentCard from "@/components/ContentCard";
 import { Link } from "react-router-dom";
-import { ScrollText, Users, Globe, Scale, Heart, Cross, BookmarkIcon, Share2, Languages, Moon, Sun, Download, Check } from "lucide-react";
+import { ScrollText, Users, Globe, Scale, Heart, Cross, BookmarkIcon, Share2, Languages, Moon, Sun, Download, Check, BookText } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Switch } from "@/components/ui/switch";
 import { usePwaInstall } from "@/hooks/use-pwa-install";
@@ -32,6 +32,7 @@ const MorePage = () => {
   };
 
   const moreLinks = [
+    { to: "/catechism", icon: BookText, label: t("nav.catechism") },
     { to: "/fathers", icon: Users, label: t("more.fathersLibrary") },
     { to: "/papal", icon: ScrollText, label: t("more.papalDocs") },
     { to: "/vatican", icon: Globe, label: t("more.vaticanNews") },
