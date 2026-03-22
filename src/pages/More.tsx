@@ -32,6 +32,7 @@ const MorePage = () => {
   };
 
   const moreLinks = [
+    { to: "/catechism", icon: BookText, label: t("nav.catechism") },
     { to: "/fathers", icon: Users, label: t("more.fathersLibrary") },
     { to: "/papal", icon: ScrollText, label: t("more.papalDocs") },
     { to: "/vatican", icon: Globe, label: t("more.vaticanNews") },
