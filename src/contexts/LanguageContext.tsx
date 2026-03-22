@@ -114,6 +114,8 @@ const translations: Record<Language, Record<string, string>> = {
     "catechism.tooMany": "Showing first 200 results.",
     "catechism.noResults": "No results found.",
     "catechism.tableOfContents": "Table of Contents",
+    "catechism.back": "Back",
+    "catechism.readAll": "Read all paragraphs in this section",
 
     // Fathers
     "fathers.title": "Church Fathers",
