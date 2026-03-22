@@ -277,6 +277,8 @@ const translations: Record<Language, Record<string, string>> = {
     "catechism.tooMany": "عرض أول 200 نتيجة.",
     "catechism.noResults": "لا توجد نتائج.",
     "catechism.tableOfContents": "الفهرس",
+    "catechism.back": "رجوع",
+    "catechism.readAll": "قراءة جميع فقرات هذا القسم",
 
     // Fathers
     "fathers.title": "آباء الكنيسة",
