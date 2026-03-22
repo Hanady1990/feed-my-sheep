@@ -17,6 +17,7 @@ import SaintsPage from "./pages/Saints";
 import SearchPage from "./pages/SearchPage";
 import MorePage from "./pages/More";
 import ArticleDetail from "./pages/ArticleDetail";
+import CatechismPage from "./pages/Catechism";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
