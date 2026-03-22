@@ -191,6 +191,7 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.heresies": "البدع",
     "nav.social": "قضايا اجتماعية",
     "nav.saints": "القديسين",
+    "nav.catechism": "التعليم المسيحي",
 
     // Home
     "home.dailyGospel": "إنجيل اليوم",
