@@ -30,6 +30,7 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.heresies": "Heresies",
     "nav.social": "Social Topics",
     "nav.saints": "Saints",
+    "nav.catechism": "Catechism",
 
     // Home
     "home.dailyGospel": "Daily Gospel",
