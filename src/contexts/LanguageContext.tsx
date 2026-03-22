@@ -262,6 +262,20 @@ const translations: Record<Language, Record<string, string>> = {
     "bible.tooManyResults": "عرض أول 200 نتيجة. حاول بحثًا أكثر تحديدًا.",
     "bible.wordSearch": "بحث بالكلمات",
 
+    // Catechism
+    "catechism.title": "التعليم المسيحي",
+    "catechism.subtitle": "التعليم المسيحي للكنيسة الكاثوليكية",
+    "catechism.gotoPlaceholder": "اذهب إلى § رقم (١–٢٨٦٥)",
+    "catechism.search": "بحث",
+    "catechism.searchSubtitle": "البحث في جميع الفقرات",
+    "catechism.searchPlaceholder": "ابحث في التعليم المسيحي...",
+    "catechism.searchBtn": "بحث",
+    "catechism.searching": "جارٍ البحث…",
+    "catechism.resultsFound": "نتيجة",
+    "catechism.tooMany": "عرض أول 200 نتيجة.",
+    "catechism.noResults": "لا توجد نتائج.",
+    "catechism.tableOfContents": "الفهرس",
+
     // Fathers
     "fathers.title": "آباء الكنيسة",
     "fathers.subtitle": "المعلمون العظام للكنيسة الأولى",
