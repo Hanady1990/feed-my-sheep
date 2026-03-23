@@ -425,14 +425,14 @@ const CatechismPage = () => {
   const children = isRoot ? [] : getCurrentChildren();
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in px-4 py-6">
       {!isRoot && (
         <button
           onClick={goBack}
-          className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-2 transition-colors active:scale-[0.97]"
+          className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-5 transition-colors active:scale-[0.97]"
         >
           <Back className="h-4 w-4" />
-          {t("catechism.back")}
+          <span className="font-body">{t("catechism.back")}</span>
         </button>
       )}
 
