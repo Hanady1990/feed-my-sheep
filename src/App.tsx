@@ -20,6 +20,12 @@ import SearchPage from "./pages/SearchPage";
 import MorePage from "./pages/More";
 import ArticleDetail from "./pages/ArticleDetail";
 import CatechismPage from "./pages/Catechism";
+import GamesPage from "./pages/Games";
+import GuessTheSaint from "./pages/games/GuessTheSaint";
+import BibleQuiz from "./pages/games/BibleQuiz";
+import TruthVsHeresy from "./pages/games/TruthVsHeresy";
+import WordScramble from "./pages/games/WordScramble";
+import MatchThePatron from "./pages/games/MatchThePatron";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
