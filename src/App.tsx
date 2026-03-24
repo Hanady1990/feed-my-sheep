@@ -12,6 +12,7 @@ import FathersPage from "./pages/Fathers";
 import PapalPage from "./pages/Papal";
 import VaticanPage from "./pages/Vatican";
 import HeresiesPage from "./pages/Heresies";
+import HeresyDetail from "./pages/HeresyDetail";
 import SocialPage from "./pages/Social";
 import SaintsPage from "./pages/Saints";
 import SaintDetail from "./pages/SaintDetail";
