@@ -14,6 +14,7 @@ import VaticanPage from "./pages/Vatican";
 import HeresiesPage from "./pages/Heresies";
 import SocialPage from "./pages/Social";
 import SaintsPage from "./pages/Saints";
+import SaintDetail from "./pages/SaintDetail";
 import SearchPage from "./pages/SearchPage";
 import MorePage from "./pages/More";
 import ArticleDetail from "./pages/ArticleDetail";
@@ -40,6 +41,7 @@ const App = () => (
               <Route path="/heresies" element={<HeresiesPage />} />
               <Route path="/social" element={<SocialPage />} />
               <Route path="/saints" element={<SaintsPage />} />
+              <Route path="/saints/:slug" element={<SaintDetail />} />
               <Route path="/catechism" element={<CatechismPage />} />
               <Route path="/search" element={<SearchPage />} />
               <Route path="/more" element={<MorePage />} />
