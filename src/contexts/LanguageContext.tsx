@@ -134,6 +134,12 @@ const translations: Record<Language, Record<string, string>> = {
     // Saints
     "saints.title": "Saints & Spirituality",
     "saints.subtitle": "Lives of holiness and spiritual wisdom",
+    "saints.biography": "Biography",
+    "saints.sayings": "Sayings & Quotes",
+    "saints.books": "Books & Writings",
+    "saints.backToList": "Back to Saints",
+    "saints.notFound": "Saint not found",
+    "saints.downloadImage": "Download Image",
 
     // Heresies
     "heresies.title": "Heresies & Christian Thought",
