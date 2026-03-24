@@ -325,6 +325,15 @@ const translations: Record<Language, Record<string, string>> = {
     "heresies.title": "البدع والفكر المسيحي",
     "heresies.subtitle": "الأخطاء التاريخية وردّ الكنيسة",
     "heresies.response": "الردّ:",
+    "heresies.founder": "المؤسس",
+    "heresies.councilResponse": "ردّ الكنيسة",
+    "heresies.defenders": "المدافعون عن الإيمان",
+    "heresies.comparison": "البدعة مقابل التعليم الكاثوليكي",
+    "heresies.heresy": "الادّعاء البدعي",
+    "heresies.catholicTeaching": "التعليم الكاثوليكي",
+    "heresies.catechismRefs": "مراجع التعليم المسيحي",
+    "heresies.backToList": "العودة إلى البدع",
+    "heresies.notFound": "البدعة غير موجودة.",
 
     // Social
     "social.title": "القضايا الاجتماعية المسيحية",
