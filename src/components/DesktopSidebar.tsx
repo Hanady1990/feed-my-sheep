@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { Home, BookOpen, Library, Search, ScrollText, Users, Globe, Scale, Heart, Cross, MoreHorizontal, BookText } from "lucide-react";
+import { Home, BookOpen, Library, Search, ScrollText, Users, Globe, Scale, Heart, Cross, MoreHorizontal, BookText, Gamepad2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const DesktopSidebar = () => {
@@ -17,6 +17,7 @@ const DesktopSidebar = () => {
     { to: "/heresies", icon: Scale, label: t("nav.heresies") },
     { to: "/social", icon: Heart, label: t("nav.social") },
     { to: "/saints", icon: Cross, label: t("nav.saints") },
+    { to: "/games", icon: Gamepad2, label: t("nav.games") },
     { to: "/search", icon: Search, label: t("nav.search") },
     { to: "/more", icon: MoreHorizontal, label: t("nav.more") },
   ];

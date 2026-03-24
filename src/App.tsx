@@ -20,6 +20,12 @@ import SearchPage from "./pages/SearchPage";
 import MorePage from "./pages/More";
 import ArticleDetail from "./pages/ArticleDetail";
 import CatechismPage from "./pages/Catechism";
+import GamesPage from "./pages/Games";
+import GuessTheSaint from "./pages/games/GuessTheSaint";
+import BibleQuiz from "./pages/games/BibleQuiz";
+import TruthVsHeresy from "./pages/games/TruthVsHeresy";
+import WordScramble from "./pages/games/WordScramble";
+import MatchThePatron from "./pages/games/MatchThePatron";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -45,6 +51,12 @@ const App = () => (
               <Route path="/saints" element={<SaintsPage />} />
               <Route path="/saints/:slug" element={<SaintDetail />} />
               <Route path="/catechism" element={<CatechismPage />} />
+              <Route path="/games" element={<GamesPage />} />
+              <Route path="/games/guess-the-saint" element={<GuessTheSaint />} />
+              <Route path="/games/bible-quiz" element={<BibleQuiz />} />
+              <Route path="/games/truth-vs-heresy" element={<TruthVsHeresy />} />
+              <Route path="/games/word-scramble" element={<WordScramble />} />
+              <Route path="/games/match-the-patron" element={<MatchThePatron />} />
               <Route path="/search" element={<SearchPage />} />
               <Route path="/more" element={<MorePage />} />
               <Route path="/article/:slug" element={<ArticleDetail />} />
