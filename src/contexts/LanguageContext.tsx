@@ -36,6 +36,8 @@ const translations: Record<Language, Record<string, string>> = {
     "home.dailyGospel": "Daily Gospel",
     "home.explore": "Explore",
     "home.featuredTeaching": "Featured Teaching",
+    "home.saintOfTheDay": "Saint of the Day",
+    "home.saint.patron": "Patron of",
     "home.vaticanNews": "Vatican News",
     "home.gospel.ref": "Matthew 5:14-16",
     "home.gospel.text": "\"You are the light of the world. A city set on a hill cannot be hidden. Nor do people light a lamp and put it under a basket, but on a stand, and it gives light to all in the house. In the same way, let your light shine before others, so that they may see your good works and give glory to your Father who is in heaven.\"",
