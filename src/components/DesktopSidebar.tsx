@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { Home, BookOpen, Library, Search, ScrollText, Users, Globe, Scale, Heart, Cross, MoreHorizontal, BookText } from "lucide-react";
+import { Home, BookOpen, Library, Search, ScrollText, Users, Globe, Scale, Heart, Cross, MoreHorizontal, BookText, Gamepad2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const DesktopSidebar = () => {
