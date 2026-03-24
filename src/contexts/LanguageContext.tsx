@@ -183,6 +183,11 @@ const translations: Record<Language, Record<string, string>> = {
     "more.installApp": "Install App",
     "more.alreadyInstalled": "Installed",
 
+    // Bread of Life
+    "breadOfLife.title": "Bread of Life",
+    "breadOfLife.tap": "Tap the wheel to receive your verse",
+    "breadOfLife.spinning": "The Lord is choosing a word for you…",
+
     // PWA
     "pwa.title": "Install Verbum Fidei",
     "pwa.description": "Add to your home screen for quick access and offline reading.",
@@ -362,6 +367,11 @@ const translations: Record<Language, Record<string, string>> = {
     "more.saintsSpirituality": "القديسين والروحانية",
     "more.installApp": "تثبيت التطبيق",
     "more.alreadyInstalled": "مثبّت",
+
+    // Bread of Life
+    "breadOfLife.title": "خبز الحياة",
+    "breadOfLife.tap": "اضغط على العجلة لتتلقى آيتك",
+    "breadOfLife.spinning": "الرب يختار كلمة لك…",
 
     // PWA
     "pwa.title": "تثبيت كلمة الإيمان",
