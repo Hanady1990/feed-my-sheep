@@ -399,20 +399,13 @@ const CatechismPage = () => {
         ) : (
           <div className="space-y-4">
             {paragraphNums.map(num => (
-              <div
+              <CopyableParagraph
                 key={num}
+                num={num}
+                text={paragraphs[String(num)]}
+                highlighted={num === highlightParagraph}
                 ref={num === highlightParagraph ? highlightRef : undefined}
-                className={`rounded-lg border p-4 transition-all ${
-                  num === highlightParagraph
-                    ? "border-primary/40 bg-primary/5 shadow-sm"
-                    : "border-border bg-card"
-                }`}
-              >
-                <span className="inline-block text-xs font-semibold text-primary tabular-nums mb-1">§{num}</span>
-                <p className="font-body text-sm leading-relaxed text-foreground whitespace-pre-line">
-                  {paragraphs[String(num)]}
-                </p>
-              </div>
+              />
             ))}
           </div>
         )}
