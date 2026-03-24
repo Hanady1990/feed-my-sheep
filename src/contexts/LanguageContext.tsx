@@ -368,6 +368,11 @@ const translations: Record<Language, Record<string, string>> = {
     "more.installApp": "تثبيت التطبيق",
     "more.alreadyInstalled": "مثبّت",
 
+    // Bread of Life
+    "breadOfLife.title": "خبز الحياة",
+    "breadOfLife.tap": "اضغط على العجلة لتتلقى آيتك",
+    "breadOfLife.spinning": "الرب يختار كلمة لك…",
+
     // PWA
     "pwa.title": "تثبيت كلمة الإيمان",
     "pwa.description": "أضف التطبيق لشاشتك الرئيسية للوصول السريع والقراءة بدون إنترنت.",
