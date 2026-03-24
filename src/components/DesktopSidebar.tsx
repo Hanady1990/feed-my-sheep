@@ -17,6 +17,7 @@ const DesktopSidebar = () => {
     { to: "/heresies", icon: Scale, label: t("nav.heresies") },
     { to: "/social", icon: Heart, label: t("nav.social") },
     { to: "/saints", icon: Cross, label: t("nav.saints") },
+    { to: "/games", icon: Gamepad2, label: t("nav.games") },
     { to: "/search", icon: Search, label: t("nav.search") },
     { to: "/more", icon: MoreHorizontal, label: t("nav.more") },
   ];

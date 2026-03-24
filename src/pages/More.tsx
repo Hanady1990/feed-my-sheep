@@ -39,6 +39,7 @@ const MorePage = () => {
     { to: "/heresies", icon: Scale, label: t("more.heresiesThought") },
     { to: "/social", icon: Heart, label: t("more.socialTopics") },
     { to: "/saints", icon: Cross, label: t("more.saintsSpirituality") },
+    { to: "/games", icon: Gamepad2, label: t("more.games") },
   ];
 
   return (
