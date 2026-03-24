@@ -14,6 +14,7 @@ import VaticanPage from "./pages/Vatican";
 import HeresiesPage from "./pages/Heresies";
 import SocialPage from "./pages/Social";
 import SaintsPage from "./pages/Saints";
+import SaintDetail from "./pages/SaintDetail";
 import SearchPage from "./pages/SearchPage";
 import MorePage from "./pages/More";
 import ArticleDetail from "./pages/ArticleDetail";
