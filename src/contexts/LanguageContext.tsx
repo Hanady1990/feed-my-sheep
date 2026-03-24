@@ -305,6 +305,12 @@ const translations: Record<Language, Record<string, string>> = {
     // Saints
     "saints.title": "القديسين والروحانية",
     "saints.subtitle": "حياة القداسة والحكمة الروحية",
+    "saints.biography": "السيرة الذاتية",
+    "saints.sayings": "أقوال واقتباسات",
+    "saints.books": "الكتب والمؤلفات",
+    "saints.backToList": "العودة إلى القديسين",
+    "saints.notFound": "القديس غير موجود",
+    "saints.downloadImage": "تحميل الصورة",
 
     // Heresies
     "heresies.title": "البدع والفكر المسيحي",
