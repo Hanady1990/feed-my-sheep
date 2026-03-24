@@ -145,6 +145,15 @@ const translations: Record<Language, Record<string, string>> = {
     "heresies.title": "Heresies & Christian Thought",
     "heresies.subtitle": "Historical errors and the Church's response",
     "heresies.response": "Response:",
+    "heresies.founder": "Founder",
+    "heresies.councilResponse": "Church Response",
+    "heresies.defenders": "Defenders of the Faith",
+    "heresies.comparison": "Heresy vs. Catholic Teaching",
+    "heresies.heresy": "Heretical Claim",
+    "heresies.catholicTeaching": "Catholic Teaching",
+    "heresies.catechismRefs": "Catechism References",
+    "heresies.backToList": "Back to Heresies",
+    "heresies.notFound": "Heresy not found.",
 
     // Social
     "social.title": "Social Christian Topics",
