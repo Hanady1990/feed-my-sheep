@@ -43,7 +43,7 @@ const HomePage = () => {
       {/* Daily Gospel */}
       <div className="animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
         <SectionHeader title={t("home.dailyGospel")} subtitle={t("home.gospel.ref")} />
-        <ContentCard className="mb-5">
+        <ContentCard className="mb-5" copyText={`${t("home.gospel.ref")}\n${t("home.gospel.text")}`}>
           <p className="font-body text-base leading-relaxed text-foreground">{t("home.gospel.text")}</p>
         </ContentCard>
       </div>
