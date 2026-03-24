@@ -145,6 +145,15 @@ const translations: Record<Language, Record<string, string>> = {
     "heresies.title": "Heresies & Christian Thought",
     "heresies.subtitle": "Historical errors and the Church's response",
     "heresies.response": "Response:",
+    "heresies.founder": "Founder",
+    "heresies.councilResponse": "Church Response",
+    "heresies.defenders": "Defenders of the Faith",
+    "heresies.comparison": "Heresy vs. Catholic Teaching",
+    "heresies.heresy": "Heretical Claim",
+    "heresies.catholicTeaching": "Catholic Teaching",
+    "heresies.catechismRefs": "Catechism References",
+    "heresies.backToList": "Back to Heresies",
+    "heresies.notFound": "Heresy not found.",
 
     // Social
     "social.title": "Social Christian Topics",
@@ -316,6 +325,15 @@ const translations: Record<Language, Record<string, string>> = {
     "heresies.title": "البدع والفكر المسيحي",
     "heresies.subtitle": "الأخطاء التاريخية وردّ الكنيسة",
     "heresies.response": "الردّ:",
+    "heresies.founder": "المؤسس",
+    "heresies.councilResponse": "ردّ الكنيسة",
+    "heresies.defenders": "المدافعون عن الإيمان",
+    "heresies.comparison": "البدعة مقابل التعليم الكاثوليكي",
+    "heresies.heresy": "الادّعاء البدعي",
+    "heresies.catholicTeaching": "التعليم الكاثوليكي",
+    "heresies.catechismRefs": "مراجع التعليم المسيحي",
+    "heresies.backToList": "العودة إلى البدع",
+    "heresies.notFound": "البدعة غير موجودة.",
 
     // Social
     "social.title": "القضايا الاجتماعية المسيحية",
