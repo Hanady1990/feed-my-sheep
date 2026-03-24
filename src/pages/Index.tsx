@@ -89,7 +89,7 @@ const HomePage = () => {
       </div>
 
       {/* Latest Vatican News */}
-      <div className="animate-fade-in-up" style={{ animationDelay: "0.25s" }}>
+      <div className="animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
         <SectionHeader title={t("home.vaticanNews")} />
         <div className="space-y-2">
           {latestNews.map((news, i) => (
