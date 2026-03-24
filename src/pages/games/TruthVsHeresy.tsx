@@ -74,8 +74,61 @@ const statements: Statement[] = [
     isTruth: true,
     explanation: { en: "The doctrine of the Holy Trinity is the central mystery of the Christian faith (CCC §234).", ar: "عقيدة الثالوث الأقدس هي السر المركزي للإيمان المسيحي (ت.م.ك §٢٣٤)." }
   },
+  // Psalms & Scripture
+  {
+    text: { en: "The Psalms were written entirely by King Solomon.", ar: "كُتبت المزامير بالكامل بواسطة الملك سليمان." },
+    isTruth: false,
+    explanation: { en: "While Solomon authored some psalms, most are attributed to David, with others by Asaph, the Sons of Korah, and Moses.", ar: "بينما كتب سليمان بعض المزامير، تُنسب معظمها إلى داود، وأخرى إلى آساف وبني قورح وموسى." }
+  },
+  {
+    text: { en: "The Book of Revelation was written by the Apostle John.", ar: "كتب سفر الرؤيا الرسول يوحنا." },
+    isTruth: true,
+    explanation: { en: "Catholic tradition attributes the Book of Revelation to St. John the Apostle, written during his exile on Patmos.", ar: "ينسب التقليد الكاثوليكي سفر الرؤيا إلى القديس يوحنا الرسول، كُتب خلال منفاه في بطمس." }
+  },
+  // Apostles
+  {
+    text: { en: "St. Paul was one of the original twelve apostles chosen by Jesus.", ar: "كان القديس بولس أحد الرسل الاثني عشر الذين اختارهم يسوع." },
+    isTruth: false,
+    explanation: { en: "Paul was not among the original Twelve. He was called by the risen Christ on the road to Damascus (Acts 9).", ar: "لم يكن بولس من الاثني عشر الأصليين. دعاه المسيح القائم على طريق دمشق (أعمال ٩)." }
+  },
+  {
+    text: { en: "Peter was given the authority of the 'keys of the kingdom of heaven' by Jesus.", ar: "أعطى يسوع بطرس سلطة 'مفاتيح ملكوت السماوات'." },
+    isTruth: true,
+    explanation: { en: "Jesus said to Peter: 'I will give you the keys of the kingdom of heaven' (Matthew 16:19), the basis of papal authority.", ar: "قال يسوع لبطرس: 'أعطيك مفاتيح ملكوت السماوات' (متى ١٦: ١٩)، وهو أساس السلطة البابوية." }
+  },
+  // Church history
+  {
+    text: { en: "The Great Schism of 1054 separated the Catholic Church from all Protestant churches.", ar: "الانشقاق الكبير عام ١٠٥٤ فصل الكنيسة الكاثوليكية عن جميع الكنائس البروتستانتية." },
+    isTruth: false,
+    explanation: { en: "The Great Schism of 1054 separated Rome from the Eastern Orthodox churches. Protestantism began in 1517 with Luther.", ar: "الانشقاق الكبير عام ١٠٥٤ فصل روما عن الكنائس الأرثوذكسية الشرقية. البروتستانتية بدأت عام ١٥١٧ مع لوثر." }
+  },
+  {
+    text: { en: "The Council of Trent reaffirmed the seven sacraments against Protestant denial.", ar: "أعاد مجمع ترنت تأكيد الأسرار السبعة ردًّا على الإنكار البروتستانتي." },
+    isTruth: true,
+    explanation: { en: "The Council of Trent (1545-1563) was the Catholic Counter-Reformation council that reaffirmed key doctrines.", ar: "مجمع ترنت (١٥٤٥-١٥٦٣) كان مجمع الإصلاح الكاثوليكي المضاد الذي أعاد تأكيد العقائد الأساسية." }
+  },
+  // Sacraments
+  {
+    text: { en: "Confirmation can be received multiple times throughout a Catholic's life.", ar: "يمكن تلقّي سر التثبيت عدة مرات خلال حياة الكاثوليكي." },
+    isTruth: false,
+    explanation: { en: "Confirmation imprints an indelible spiritual mark and can only be received once (CCC §1304).", ar: "سر التثبيت يطبع علامة روحية لا تُمحى ولا يُمنح إلا مرة واحدة (ت.م.ك §١٣٠٤)." }
+  },
+  {
+    text: { en: "The Anointing of the Sick can only be given to someone who is about to die.", ar: "مسحة المرضى لا تُمنح إلا لمن هو على وشك الموت." },
+    isTruth: false,
+    explanation: { en: "The Anointing of the Sick is for anyone seriously ill, facing surgery, or elderly — not only the dying (CCC §1514-1515).", ar: "مسحة المرضى لكل مريض بشكل خطير أو مقبل على جراحة أو مسن — وليس فقط للمحتضرين (ت.م.ك §١٥١٤-١٥١٥)." }
+  },
+  {
+    text: { en: "In the Sacrament of Holy Orders, a man is ordained as deacon, priest, or bishop.", ar: "في سر الكهنوت يُرسم الرجل شمّاسًا أو كاهنًا أو أسقفًا." },
+    isTruth: true,
+    explanation: { en: "Holy Orders has three degrees: diaconate, presbyterate, and episcopate (CCC §1536).", ar: "للكهنوت ثلاث درجات: الشماسية والكهنوت والأسقفية (ت.م.ك §١٥٣٦)." }
+  },
+  {
+    text: { en: "Marriage is a sacrament instituted by the Church, not by Christ.", ar: "الزواج سر أسّسته الكنيسة وليس المسيح." },
+    isTruth: false,
+    explanation: { en: "Christ elevated marriage to a sacrament. He affirmed its indissolubility at the wedding at Cana and in Matthew 19:6.", ar: "رفع المسيح الزواج إلى مرتبة سر مقدس. أكد عدم انحلاله في عرس قانا وفي متى ١٩: ٦." }
+  },
 ];
-
 function shuffleArray<T>(arr: T[]): T[] {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
