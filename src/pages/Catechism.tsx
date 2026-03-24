@@ -103,6 +103,7 @@ const CopyableParagraph = React.forwardRef<HTMLDivElement, { num: number; text: 
 );
 CopyableParagraph.displayName = "CopyableParagraph";
 
+const CatechismPage = () => {
   const { t, isRTL, language } = useLanguage();
   const Chevron = isRTL ? ChevronLeft : ChevronRight;
   const Back = isRTL ? ArrowRight : ArrowLeft;
