@@ -34,7 +34,7 @@ const HomePage = () => {
       </div>
 
       {/* Daily Quote */}
-      <ContentCard gold className="mb-5 animate-fade-in-up text-center" style={{ animationDelay: "0.05s" }}>
+      <ContentCard gold className="mb-5 animate-fade-in-up text-center" style={{ animationDelay: "0.05s" }} copyText={`${t("home.quote.text")} — ${t("home.quote.author")}, ${t("home.quote.source")}`}>
         <p className="font-body text-lg italic text-foreground leading-relaxed">{t("home.quote.text")}</p>
         <p className="mt-2 font-display text-xs tracking-widest text-gold uppercase">— {t("home.quote.author")}</p>
         <p className="font-body text-xs text-muted-foreground">{t("home.quote.source")}</p>
