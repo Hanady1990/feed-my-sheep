@@ -183,6 +183,11 @@ const translations: Record<Language, Record<string, string>> = {
     "more.installApp": "Install App",
     "more.alreadyInstalled": "Installed",
 
+    // Bread of Life
+    "breadOfLife.title": "Bread of Life",
+    "breadOfLife.tap": "Tap the wheel to receive your verse",
+    "breadOfLife.spinning": "The Lord is choosing a word for you…",
+
     // PWA
     "pwa.title": "Install Verbum Fidei",
     "pwa.description": "Add to your home screen for quick access and offline reading.",
