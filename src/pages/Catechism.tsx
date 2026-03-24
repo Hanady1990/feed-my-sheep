@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import SectionHeader from "@/components/SectionHeader";
+import { Copy, Check } from "lucide-react";
 import { ChevronRight, ChevronLeft, ArrowLeft, ArrowRight, Search, BookOpen, Hash, FolderOpen } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Input } from "@/components/ui/input";
