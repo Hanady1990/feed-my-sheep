@@ -34,7 +34,7 @@ const HomePage = () => {
       </div>
 
       {/* Daily Quote */}
-      <ContentCard gold className="mb-5 animate-fade-in-up text-center" style={{ animationDelay: "0.05s" }}>
+      <ContentCard gold className="mb-5 animate-fade-in-up text-center" style={{ animationDelay: "0.05s" }} copyText={`${t("home.quote.text")} — ${t("home.quote.author")}, ${t("home.quote.source")}`}>
         <p className="font-body text-lg italic text-foreground leading-relaxed">{t("home.quote.text")}</p>
         <p className="mt-2 font-display text-xs tracking-widest text-gold uppercase">— {t("home.quote.author")}</p>
         <p className="font-body text-xs text-muted-foreground">{t("home.quote.source")}</p>
@@ -43,7 +43,7 @@ const HomePage = () => {
       {/* Daily Gospel */}
       <div className="animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
         <SectionHeader title={t("home.dailyGospel")} subtitle={t("home.gospel.ref")} />
-        <ContentCard className="mb-5">
+        <ContentCard className="mb-5" copyText={`${t("home.gospel.ref")}\n${t("home.gospel.text")}`}>
           <p className="font-body text-base leading-relaxed text-foreground">{t("home.gospel.text")}</p>
         </ContentCard>
       </div>

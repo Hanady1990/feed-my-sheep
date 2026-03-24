@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import SectionHeader from "@/components/SectionHeader";
+import { Copy, Check } from "lucide-react";
 import { ChevronRight, ChevronLeft, ArrowLeft, ArrowRight, Search, BookOpen, Hash, FolderOpen } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Input } from "@/components/ui/input";
@@ -69,6 +70,38 @@ function getDescendantsAtNextLevel(toc: TocEntry[], parentRange: [number, number
   const minLevel = Math.min(...within.map(e => e.level));
   return within.filter(e => e.level === minLevel);
 }
+import React from "react";
+
+const CopyableParagraph = React.forwardRef<HTMLDivElement, { num: number; text: string; highlighted: boolean }>(
+  ({ num, text, highlighted }, ref) => {
+    const [copied, setCopied] = useState(false);
+    const handleCopy = async (e: React.MouseEvent) => {
+      e.stopPropagation();
+      await navigator.clipboard.writeText(`§${num} ${text}`);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    };
+    return (
+      <div
+        ref={ref}
+        className={`rounded-lg border p-4 transition-all relative group ${
+          highlighted ? "border-primary/40 bg-primary/5 shadow-sm" : "border-border bg-card"
+        }`}
+      >
+        <span className="inline-block text-xs font-semibold text-primary tabular-nums mb-1">§{num}</span>
+        <p className="font-body text-sm leading-relaxed text-foreground whitespace-pre-line">{text}</p>
+        <button
+          onClick={handleCopy}
+          className="absolute top-2 end-2 p-1.5 rounded-md opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity text-muted-foreground hover:text-foreground hover:bg-muted"
+          aria-label="Copy"
+        >
+          {copied ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}
+        </button>
+      </div>
+    );
+  }
+);
+CopyableParagraph.displayName = "CopyableParagraph";
 
 const CatechismPage = () => {
   const { t, isRTL, language } = useLanguage();
@@ -398,20 +431,13 @@ const CatechismPage = () => {
         ) : (
           <div className="space-y-4">
             {paragraphNums.map(num => (
-              <div
+              <CopyableParagraph
                 key={num}
+                num={num}
+                text={paragraphs[String(num)]}
+                highlighted={num === highlightParagraph}
                 ref={num === highlightParagraph ? highlightRef : undefined}
-                className={`rounded-lg border p-4 transition-all ${
-                  num === highlightParagraph
-                    ? "border-primary/40 bg-primary/5 shadow-sm"
-                    : "border-border bg-card"
-                }`}
-              >
-                <span className="inline-block text-xs font-semibold text-primary tabular-nums mb-1">§{num}</span>
-                <p className="font-body text-sm leading-relaxed text-foreground whitespace-pre-line">
-                  {paragraphs[String(num)]}
-                </p>
-              </div>
+              />
             ))}
           </div>
         )}
