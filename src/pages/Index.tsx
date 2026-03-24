@@ -66,8 +66,16 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* Featured Teaching */}
+      {/* Saint of the Day */}
       <div className="animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+        <SectionHeader title={t("home.saintOfTheDay")} />
+        <div className="mb-5">
+          <SaintOfTheDay />
+        </div>
+      </div>
+
+      {/* Featured Teaching */}
+      <div className="animate-fade-in-up" style={{ animationDelay: "0.25s" }}>
         <SectionHeader title={t("home.featuredTeaching")} />
         <Link to="/article/the-seven-sacraments">
           <ContentCard gold className="mb-5 cursor-pointer hover:border-gold transition-all">
