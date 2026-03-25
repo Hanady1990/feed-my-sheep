@@ -240,6 +240,24 @@ const translations: Record<Language, Record<string, string>> = {
     "games.wordScramble.desc": "Unscramble the Bible verse",
     "games.matchPatron": "Match the Patron",
     "games.matchPatron.desc": "Match saints to their patronage",
+
+    // Daily Devotions
+    "daily.title": "Daily Devotions",
+    "daily.subtitle": "Your spiritual checklist for today",
+    "daily.bible": "Read the Bible",
+    "daily.bible.desc": "Read a chapter or passage from Scripture",
+    "daily.rosary": "Pray the Rosary",
+    "daily.rosary.desc": "Meditate on the mysteries of the Rosary",
+    "daily.prayer": "Morning / Evening Prayer",
+    "daily.prayer.desc": "Offer your day to God in prayer",
+    "daily.saint": "Learn About a Saint",
+    "daily.saint.desc": "Read about a saint's life and example",
+    "daily.examine": "Examine Your Conscience",
+    "daily.examine.desc": "Reflect on your actions and seek God's mercy",
+    "daily.psalm": "Pray a Psalm",
+    "daily.psalm.desc": "Let the Psalms lift your heart to God",
+    "daily.complete": "All devotions complete! God bless your day ✝",
+    "daily.go": "Go →",
   },
   ar: {
     // App
