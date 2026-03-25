@@ -2,6 +2,7 @@ import ContentCard from "@/components/ContentCard";
 import SectionHeader from "@/components/SectionHeader";
 import SaintOfTheDay from "@/components/SaintOfTheDay";
 import BreadOfLife from "@/components/BreadOfLife";
+import DailyDevotions from "@/components/DailyDevotions";
 import { BookOpen, Users, ScrollText, Globe, Scale, Heart, Cross, Library } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
