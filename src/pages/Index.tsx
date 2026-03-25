@@ -68,8 +68,16 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* Bread of Life */}
+      {/* Daily Devotions */}
       <div className="animate-fade-in-up" style={{ animationDelay: "0.18s" }}>
+        <SectionHeader title={t("daily.title")} subtitle={t("daily.subtitle")} />
+        <div className="mb-5">
+          <DailyDevotions />
+        </div>
+      </div>
+
+      {/* Bread of Life */}
+      <div className="animate-fade-in-up" style={{ animationDelay: "0.22s" }}>
         <SectionHeader title={t("breadOfLife.title")} />
         <div className="mb-5">
           <BreadOfLife />

@@ -468,6 +468,24 @@ const translations: Record<Language, Record<string, string>> = {
     "games.wordScramble.desc": "أعد ترتيب الآية الكتابية",
     "games.matchPatron": "طابق الشفيع",
     "games.matchPatron.desc": "طابق القديسين بشفاعاتهم",
+
+    // Daily Devotions
+    "daily.title": "ورد يومي",
+    "daily.subtitle": "قائمة مهامك الروحية لهذا اليوم",
+    "daily.bible": "اقرأ الكتاب المقدس",
+    "daily.bible.desc": "اقرأ فصلاً أو مقطعاً من الكتاب المقدس",
+    "daily.rosary": "صلِّ المسبحة الوردية",
+    "daily.rosary.desc": "تأمّل في أسرار الوردية المقدسة",
+    "daily.prayer": "صلاة الصباح / المساء",
+    "daily.prayer.desc": "قدّم يومك لله في الصلاة",
+    "daily.saint": "تعرّف على قديس",
+    "daily.saint.desc": "اقرأ عن حياة قديس وقدوته",
+    "daily.examine": "فحص الضمير",
+    "daily.examine.desc": "تأمّل في أعمالك واطلب رحمة الله",
+    "daily.psalm": "صلِّ مزموراً",
+    "daily.psalm.desc": "دع المزامير ترفع قلبك إلى الله",
+    "daily.complete": "أتممت جميع الأوراد! بارك الله يومك ✝",
+    "daily.go": "← اذهب",
   },
 };
 
