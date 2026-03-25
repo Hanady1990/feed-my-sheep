@@ -2,6 +2,7 @@ import ContentCard from "@/components/ContentCard";
 import SectionHeader from "@/components/SectionHeader";
 import SaintOfTheDay from "@/components/SaintOfTheDay";
 import BreadOfLife from "@/components/BreadOfLife";
+import DailyDevotions from "@/components/DailyDevotions";
 import { BookOpen, Users, ScrollText, Globe, Scale, Heart, Cross, Library } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -67,8 +68,16 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* Bread of Life */}
+      {/* Daily Devotions */}
       <div className="animate-fade-in-up" style={{ animationDelay: "0.18s" }}>
+        <SectionHeader title={t("daily.title")} subtitle={t("daily.subtitle")} />
+        <div className="mb-5">
+          <DailyDevotions />
+        </div>
+      </div>
+
+      {/* Bread of Life */}
+      <div className="animate-fade-in-up" style={{ animationDelay: "0.22s" }}>
         <SectionHeader title={t("breadOfLife.title")} />
         <div className="mb-5">
           <BreadOfLife />
