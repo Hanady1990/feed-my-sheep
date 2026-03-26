@@ -14,7 +14,231 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      articles: {
+        Row: {
+          author: string | null
+          catechism_refs: Json
+          content: string
+          content_ar: string
+          created_at: string
+          date: string | null
+          id: string
+          read_time: string | null
+          related_ids: string[]
+          section: string
+          slug: string
+          subtitle: string | null
+          subtitle_ar: string | null
+          tags: string[]
+          title: string
+          title_ar: string
+          updated_at: string
+        }
+        Insert: {
+          author?: string | null
+          catechism_refs?: Json
+          content?: string
+          content_ar?: string
+          created_at?: string
+          date?: string | null
+          id?: string
+          read_time?: string | null
+          related_ids?: string[]
+          section: string
+          slug: string
+          subtitle?: string | null
+          subtitle_ar?: string | null
+          tags?: string[]
+          title: string
+          title_ar?: string
+          updated_at?: string
+        }
+        Update: {
+          author?: string | null
+          catechism_refs?: Json
+          content?: string
+          content_ar?: string
+          created_at?: string
+          date?: string | null
+          id?: string
+          read_time?: string | null
+          related_ids?: string[]
+          section?: string
+          slug?: string
+          subtitle?: string | null
+          subtitle_ar?: string | null
+          tags?: string[]
+          title?: string
+          title_ar?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      heresies: {
+        Row: {
+          categorical_refs: string[]
+          council_response: string | null
+          council_response_ar: string | null
+          created_at: string
+          founder: string | null
+          founder_ar: string | null
+          id: string
+          key_figures: string[]
+          key_figures_ar: string[]
+          name: string
+          name_ar: string
+          period: string | null
+          period_ar: string | null
+          points: Json
+          slug: string
+          summary: string
+          summary_ar: string
+          updated_at: string
+        }
+        Insert: {
+          categorical_refs?: string[]
+          council_response?: string | null
+          council_response_ar?: string | null
+          created_at?: string
+          founder?: string | null
+          founder_ar?: string | null
+          id?: string
+          key_figures?: string[]
+          key_figures_ar?: string[]
+          name: string
+          name_ar?: string
+          period?: string | null
+          period_ar?: string | null
+          points?: Json
+          slug: string
+          summary?: string
+          summary_ar?: string
+          updated_at?: string
+        }
+        Update: {
+          categorical_refs?: string[]
+          council_response?: string | null
+          council_response_ar?: string | null
+          created_at?: string
+          founder?: string | null
+          founder_ar?: string | null
+          id?: string
+          key_figures?: string[]
+          key_figures_ar?: string[]
+          name?: string
+          name_ar?: string
+          period?: string | null
+          period_ar?: string | null
+          points?: Json
+          slug?: string
+          summary?: string
+          summary_ar?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      quiz_questions: {
+        Row: {
+          correct_index: number | null
+          created_at: string
+          explanation_ar: string | null
+          explanation_en: string | null
+          game_type: string
+          id: string
+          is_truth: boolean | null
+          options: Json
+          question_ar: string
+          question_en: string
+        }
+        Insert: {
+          correct_index?: number | null
+          created_at?: string
+          explanation_ar?: string | null
+          explanation_en?: string | null
+          game_type: string
+          id?: string
+          is_truth?: boolean | null
+          options?: Json
+          question_ar?: string
+          question_en: string
+        }
+        Update: {
+          correct_index?: number | null
+          created_at?: string
+          explanation_ar?: string | null
+          explanation_en?: string | null
+          game_type?: string
+          id?: string
+          is_truth?: boolean | null
+          options?: Json
+          question_ar?: string
+          question_en?: string
+        }
+        Relationships: []
+      }
+      saints: {
+        Row: {
+          bio_ar: string
+          bio_en: string
+          books: Json
+          created_at: string
+          feast_ar: string
+          feast_en: string
+          full_bio_ar: string
+          full_bio_en: string
+          id: string
+          image_url: string | null
+          name_ar: string
+          name_en: string
+          patron_of_ar: string | null
+          patron_of_en: string | null
+          sayings: Json
+          slug: string
+          updated_at: string
+          years: string | null
+        }
+        Insert: {
+          bio_ar?: string
+          bio_en?: string
+          books?: Json
+          created_at?: string
+          feast_ar?: string
+          feast_en?: string
+          full_bio_ar?: string
+          full_bio_en?: string
+          id?: string
+          image_url?: string | null
+          name_ar?: string
+          name_en: string
+          patron_of_ar?: string | null
+          patron_of_en?: string | null
+          sayings?: Json
+          slug: string
+          updated_at?: string
+          years?: string | null
+        }
+        Update: {
+          bio_ar?: string
+          bio_en?: string
+          books?: Json
+          created_at?: string
+          feast_ar?: string
+          feast_en?: string
+          full_bio_ar?: string
+          full_bio_en?: string
+          id?: string
+          image_url?: string | null
+          name_ar?: string
+          name_en?: string
+          patron_of_ar?: string | null
+          patron_of_en?: string | null
+          sayings?: Json
+          slug?: string
+          updated_at?: string
+          years?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
