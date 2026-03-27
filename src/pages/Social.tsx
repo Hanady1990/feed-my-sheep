@@ -25,7 +25,7 @@ const SocialPage = () => {
     <div className="mx-auto max-w-2xl px-4 py-6">
       <SectionHeader title={t("social.title")} subtitle={t("social.subtitle")} />
       <div className="space-y-3">
-        {socialArticles.map((article) => (
+        {list.map((article) => (
           <Link key={article.id} to={`/article/${article.slug}`}>
             <ContentCard gold className="cursor-pointer hover:border-gold">
               <div className="flex items-start gap-3">

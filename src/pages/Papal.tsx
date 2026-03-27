@@ -26,7 +26,7 @@ const PapalPage = () => {
     <div className="mx-auto max-w-2xl px-4 py-6">
       <SectionHeader title={t("papal.title")} subtitle={t("papal.subtitle")} />
       <div className="space-y-3">
-        {papal.map((article) => (
+        {list.map((article) => (
           <Link key={article.id} to={`/article/${article.slug}`}>
             <ContentCard className="cursor-pointer hover:border-gold-light">
               <div className="flex items-start gap-3">
