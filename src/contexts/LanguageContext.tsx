@@ -511,6 +511,13 @@ const translations: Record<Language, Record<string, string>> = {
     "daily.psalm.desc": "دع المزامير ترفع قلبك إلى الله",
     "daily.complete": "أتممت جميع الأوراد! بارك الله يومك ✝",
     "daily.go": "← اذهب",
+
+    // Notifications
+    "notifications.title": "الإشعارات",
+    "notifications.description": "تذكيرات روحية يومية",
+    "notifications.enabled": "تم تفعيل الإشعارات! ستتلقى تذكيرات يومية.",
+    "notifications.disabled": "تم إيقاف الإشعارات.",
+    "notifications.blocked": "الإشعارات محظورة. يرجى تفعيلها من إعدادات المتصفح.",
   },
 };
 
