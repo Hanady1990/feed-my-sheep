@@ -55,11 +55,11 @@ async function createJWT(privateKeyB64url: string, publicKeyB64url: string, audi
 }
 
 async function sendWebPush(subscription: { endpoint: string; p256dh: string; auth: string }, payload: string) {
-  const vapidPublicKey = (Deno.env.get("VAPID_PUBLIC_KEY") || "").trim();
+  // Public key is safe to hardcode - it's published to clients
+  const vapidPublicKey = "BMy-B34D0kZhPKN3GUHriNoCCetAji1ljnawFbRwEbEoIIOuZFakczA_lzmHIXbGbzzvG6HTRnr7Sx28WvRbDms";
   const vapidPrivateKey = (Deno.env.get("VAPID_PRIVATE_KEY") || "").trim();
   
-  console.log("DEBUG pub key len:", vapidPublicKey.length, "start:", vapidPublicKey.substring(0, 15));
-  console.log("DEBUG priv key len:", vapidPrivateKey.length);
+  console.log("DEBUG priv key len:", vapidPrivateKey.length, "start:", vapidPrivateKey.substring(0, 5));
 
   const url = new URL(subscription.endpoint);
   const audience = `${url.protocol}//${url.host}`;
