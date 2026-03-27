@@ -60,6 +60,7 @@ const AdminDashboard = () => {
         {activeTab === "saints" && <AdminSaints />}
         {activeTab === "heresies" && <AdminHeresies />}
         {activeTab === "quiz" && <AdminQuizQuestions />}
+        {activeTab === "push" && <AdminPushNotifications />}
       </div>
     </div>
   );
