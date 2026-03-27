@@ -1,20 +1,28 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { encode as base64Encode, decode as base64Decode } from "https://deno.land/std@0.220.0/encoding/base64url.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-function base64urlToUint8Array(b64url: string): Uint8Array {
-  return base64Decode(b64url.trim());
+function base64urlDecode(str: string): Uint8Array {
+  str = str.trim();
+  // Add padding
+  const pad = (4 - (str.length % 4)) % 4;
+  str += "=".repeat(pad);
+  // Convert to standard base64
+  str = str.replace(/-/g, "+").replace(/_/g, "/");
+  const binary = atob(str);
+  return Uint8Array.from(binary, (c) => c.charCodeAt(0));
 }
 
-function uint8ArrayToBase64url(arr: Uint8Array): string {
-  return base64Encode(arr);
+function uint8ToBase64url(arr: Uint8Array): string {
+  let binary = "";
+  for (const b of arr) binary += String.fromCharCode(b);
+  return btoa(binary).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
 }
 
-async function createJWT(privateKeyBase64url: string, publicKeyBase64url: string, audience: string) {
+async function createJWT(privateKeyB64url: string, publicKeyB64url: string, audience: string) {
   const header = { typ: "JWT", alg: "ES256" };
   const now = Math.floor(Date.now() / 1000);
   const payload = {
@@ -23,25 +31,25 @@ async function createJWT(privateKeyBase64url: string, publicKeyBase64url: string
     sub: "mailto:admin@verbumfidei.app",
   };
 
-  const headerB64 = uint8ArrayToBase64url(new TextEncoder().encode(JSON.stringify(header)));
-  const payloadB64 = uint8ArrayToBase64url(new TextEncoder().encode(JSON.stringify(payload)));
+  const headerB64 = uint8ToBase64url(new TextEncoder().encode(JSON.stringify(header)));
+  const payloadB64 = uint8ToBase64url(new TextEncoder().encode(JSON.stringify(payload)));
   const unsignedToken = `${headerB64}.${payloadB64}`;
 
-  const pubRaw = base64urlToUint8Array(publicKeyBase64url);
+  const pubRaw = base64urlDecode(publicKeyB64url);
   const x = pubRaw.slice(1, 33);
   const y = pubRaw.slice(33, 65);
 
   const jwk = {
     kty: "EC",
     crv: "P-256",
-    x: uint8ArrayToBase64url(x),
-    y: uint8ArrayToBase64url(y),
-    d: privateKeyBase64url.trim(),
+    x: uint8ToBase64url(x),
+    y: uint8ToBase64url(y),
+    d: privateKeyB64url.trim(),
   };
 
   const key = await crypto.subtle.importKey("jwk", jwk, { name: "ECDSA", namedCurve: "P-256" }, false, ["sign"]);
   const signature = await crypto.subtle.sign({ name: "ECDSA", hash: "SHA-256" }, key, new TextEncoder().encode(unsignedToken));
-  const sigB64 = uint8ArrayToBase64url(new Uint8Array(signature));
+  const sigB64 = uint8ToBase64url(new Uint8Array(signature));
 
   return `${unsignedToken}.${sigB64}`;
 }
@@ -49,8 +57,6 @@ async function createJWT(privateKeyBase64url: string, publicKeyBase64url: string
 async function sendWebPush(subscription: { endpoint: string; p256dh: string; auth: string }, payload: string) {
   const vapidPublicKey = (Deno.env.get("VAPID_PUBLIC_KEY") || "").trim();
   const vapidPrivateKey = (Deno.env.get("VAPID_PRIVATE_KEY") || "").trim();
-
-  console.log("VAPID keys loaded, pub length:", vapidPublicKey.length, "priv length:", vapidPrivateKey.length);
 
   const url = new URL(subscription.endpoint);
   const audience = `${url.protocol}//${url.host}`;
