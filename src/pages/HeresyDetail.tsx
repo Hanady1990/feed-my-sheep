@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { getHeresyBySlug } from "@/data/heresies";
+import { useHeresy } from "@/hooks/use-supabase-data";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { ArrowLeft, ArrowRight, Scale, Shield, BookOpen, Users, ChevronRight } from "lucide-react";
 import ContentCard from "@/components/ContentCard";
@@ -10,7 +10,7 @@ const HeresyDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const { t, language, isRTL } = useLanguage();
-  const heresy = getHeresyBySlug(slug || "");
+  const heresy = useHeresy(slug);
 
   if (!heresy) {
     return (

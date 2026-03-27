@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { getSaintBySlug } from "@/data/saints";
+import { useSaint } from "@/hooks/use-supabase-data";
 import ContentCard from "@/components/ContentCard";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Download, Quote, BookOpen, Shield, Calendar, Cross } from "lucide-react";
@@ -9,7 +9,7 @@ const SaintDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const { language, t } = useLanguage();
-  const saint = getSaintBySlug(slug || "");
+  const saint = useSaint(slug);
 
   if (!saint) {
     return (
