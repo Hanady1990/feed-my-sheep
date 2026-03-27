@@ -2,12 +2,14 @@ import SectionHeader from "@/components/SectionHeader";
 import ContentCard from "@/components/ContentCard";
 import { ScrollText } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useArticles } from "@/hooks/use-supabase-data";
 import { getArticlesBySection } from "@/data/articles";
 import { Link } from "react-router-dom";
 
 const PapalPage = () => {
   const { t, language } = useLanguage();
-  const papal = getArticlesBySection("papal");
+  const { data: papal } = useArticles("papal");
+  const list = papal && papal.length > 0 ? papal : getArticlesBySection("papal");
 
   // Static entries for docs without full articles yet
   const staticDocs = [

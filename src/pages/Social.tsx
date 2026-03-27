@@ -2,12 +2,14 @@ import SectionHeader from "@/components/SectionHeader";
 import ContentCard from "@/components/ContentCard";
 import { Heart } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useArticles } from "@/hooks/use-supabase-data";
 import { getArticlesBySection } from "@/data/articles";
 import { Link } from "react-router-dom";
 
 const SocialPage = () => {
   const { t, language } = useLanguage();
-  const socialArticles = getArticlesBySection("social");
+  const { data: socialArticles } = useArticles("social");
+  const list = socialArticles && socialArticles.length > 0 ? socialArticles : getArticlesBySection("social");
 
   // Static entries for topics without full articles yet
   const staticTopics = [
