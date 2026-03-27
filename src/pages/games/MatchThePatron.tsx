@@ -65,7 +65,7 @@ const MatchThePatron = () => {
     setMatches({});
     setWrong(null);
     setTotalRounds((p) => p + 1);
-  }, [language]);
+  }, [language, saints]);
 
   const resetGame = useCallback(() => {
     setRound(generateRound(language, saints));
