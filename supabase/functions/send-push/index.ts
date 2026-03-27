@@ -2,29 +2,25 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-// Web Push utilities
-function urlBase64ToUint8Array(base64String: string): Uint8Array {
-  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
-  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
-  const rawData = atob(base64);
-  return Uint8Array.from([...rawData].map((c) => c.charCodeAt(0)));
+function base64urlDecode(str: string): Uint8Array {
+  str = str.trim();
+  const pad = (4 - (str.length % 4)) % 4;
+  str += "=".repeat(pad);
+  str = str.replace(/-/g, "+").replace(/_/g, "/");
+  const binary = atob(str);
+  return Uint8Array.from(binary, (c) => c.charCodeAt(0));
 }
 
-async function importPrivateKey(base64url: string) {
-  const raw = urlBase64ToUint8Array(base64url);
-  return await crypto.subtle.importKey(
-    "raw",
-    raw,
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"]
-  );
+function uint8ToBase64url(arr: Uint8Array): string {
+  let binary = "";
+  for (const b of arr) binary += String.fromCharCode(b);
+  return btoa(binary).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
 }
 
-async function createJWT(privateKeyBase64: string, publicKeyBase64: string, audience: string) {
+async function createJWT(privateKeyB64url: string, publicKeyB64url: string, audience: string) {
   const header = { typ: "JWT", alg: "ES256" };
   const now = Math.floor(Date.now() / 1000);
   const payload = {
@@ -33,45 +29,25 @@ async function createJWT(privateKeyBase64: string, publicKeyBase64: string, audi
     sub: "mailto:admin@verbumfidei.app",
   };
 
-  const enc = new TextEncoder();
-  const headerB64 = btoa(JSON.stringify(header)).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
-  const payloadB64 = btoa(JSON.stringify(payload)).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
+  const headerB64 = uint8ToBase64url(new TextEncoder().encode(JSON.stringify(header)));
+  const payloadB64 = uint8ToBase64url(new TextEncoder().encode(JSON.stringify(payload)));
   const unsignedToken = `${headerB64}.${payloadB64}`;
 
-  // Import the private key for ECDSA signing
-  const rawKey = urlBase64ToUint8Array(privateKeyBase64);
-  
-  // For ECDSA P-256, we need to import as JWK
-  const pubRaw = urlBase64ToUint8Array(publicKeyBase64);
-  // The public key is 65 bytes uncompressed (04 || x || y)
+  const pubRaw = base64urlDecode(publicKeyB64url);
   const x = pubRaw.slice(1, 33);
   const y = pubRaw.slice(33, 65);
-  
+
   const jwk = {
     kty: "EC",
     crv: "P-256",
-    x: btoa(String.fromCharCode(...x)).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_"),
-    y: btoa(String.fromCharCode(...y)).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_"),
-    d: privateKeyBase64,
+    x: uint8ToBase64url(x),
+    y: uint8ToBase64url(y),
+    d: privateKeyB64url.trim(),
   };
 
-  const key = await crypto.subtle.importKey(
-    "jwk",
-    jwk,
-    { name: "ECDSA", namedCurve: "P-256" },
-    false,
-    ["sign"]
-  );
-
-  const signature = await crypto.subtle.sign(
-    { name: "ECDSA", hash: "SHA-256" },
-    key,
-    enc.encode(unsignedToken)
-  );
-
-  // Convert DER signature to raw r||s format if needed, but WebCrypto returns raw
-  const sigArray = new Uint8Array(signature);
-  const sigB64 = btoa(String.fromCharCode(...sigArray)).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
+  const key = await crypto.subtle.importKey("jwk", jwk, { name: "ECDSA", namedCurve: "P-256" }, false, ["sign"]);
+  const signature = await crypto.subtle.sign({ name: "ECDSA", hash: "SHA-256" }, key, new TextEncoder().encode(unsignedToken));
+  const sigB64 = uint8ToBase64url(new Uint8Array(signature));
 
   return `${unsignedToken}.${sigB64}`;
 }
@@ -99,10 +75,9 @@ async function sendWebPush(subscription: { endpoint: string; p256dh: string; aut
 
   const url = new URL(subscription.endpoint);
   const audience = `${url.protocol}//${url.host}`;
-
   const jwt = await createJWT(vapidPrivateKey, vapidPublicKey, audience);
 
-  const response = await fetch(subscription.endpoint, {
+  return await fetch(subscription.endpoint, {
     method: "POST",
     headers: {
       "Content-Type": "application/octet-stream",
@@ -111,8 +86,6 @@ async function sendWebPush(subscription: { endpoint: string; p256dh: string; aut
     },
     body: payload,
   });
-
-  return response;
 }
 
 Deno.serve(async (req) => {
@@ -160,7 +133,6 @@ Deno.serve(async (req) => {
         if (res.status === 201 || res.status === 200) {
           sent++;
         } else if (res.status === 404 || res.status === 410) {
-          // Subscription expired, remove it
           await supabase.from("push_subscriptions").delete().eq("id", sub.id);
           failed++;
         } else {
