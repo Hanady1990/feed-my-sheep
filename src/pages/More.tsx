@@ -11,6 +11,18 @@ import { toast } from "sonner";
 const MorePage = () => {
   const { t, language, setLanguage, theme, setTheme } = useLanguage();
   const { canPrompt, promptInstall, isStandalone, showIosGuide, showAndroidGuide, isInstalled } = usePwaInstall();
+  const { isSupported: pushSupported, isSubscribed: pushSubscribed, isLoading: pushLoading, permission: pushPermission, subscribe: pushSubscribe, unsubscribe: pushUnsubscribe } = usePushNotifications();
+
+  const handleNotificationToggle = async (enabled: boolean) => {
+    if (enabled) {
+      const ok = await pushSubscribe(language);
+      if (ok) toast.success(t("notifications.enabled"));
+      else if (pushPermission === "denied") toast.error(t("notifications.blocked"));
+    } else {
+      await pushUnsubscribe();
+      toast(t("notifications.disabled"));
+    }
+  };
 
   const handleInstallClick = async () => {
     if (canPrompt) {
