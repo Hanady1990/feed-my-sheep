@@ -258,6 +258,13 @@ const translations: Record<Language, Record<string, string>> = {
     "daily.psalm.desc": "Let the Psalms lift your heart to God",
     "daily.complete": "All devotions complete! God bless your day ✝",
     "daily.go": "Go →",
+
+    // Notifications
+    "notifications.title": "Push Notifications",
+    "notifications.description": "Daily spiritual reminders",
+    "notifications.enabled": "Notifications enabled! You'll receive daily reminders.",
+    "notifications.disabled": "Notifications disabled.",
+    "notifications.blocked": "Notifications are blocked. Please enable them in your browser settings.",
   },
   ar: {
     // App
