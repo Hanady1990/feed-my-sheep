@@ -80,6 +80,25 @@ const MorePage = () => {
             onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
           />
         </ContentCard>
+        {pushSupported && (
+          <ContentCard className="flex items-center gap-3">
+            {pushSubscribed ? <Bell className="h-5 w-5 text-gold" /> : <BellOff className="h-5 w-5 text-gold" />}
+            <div className="flex-1">
+              <span className="font-body text-sm text-foreground">{t("notifications.title")}</span>
+              <p className="font-body text-xs text-muted-foreground">{t("notifications.description")}</p>
+            </div>
+            {pushLoading ? (
+              <Loader2 className="ms-auto h-4 w-4 animate-spin text-muted-foreground" />
+            ) : (
+              <Switch
+                className="ms-auto"
+                checked={pushSubscribed}
+                onCheckedChange={handleNotificationToggle}
+                disabled={pushPermission === "denied"}
+              />
+            )}
+          </ContentCard>
+        )}
         <ContentCard
           className="flex items-center gap-3 cursor-pointer hover:border-gold-light"
           onClick={() => setLanguage(language === "en" ? "ar" : "en")}
