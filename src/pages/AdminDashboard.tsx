@@ -3,17 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { useAdmin } from "@/contexts/AdminContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { LogOut, BookOpen, Users, AlertTriangle, HelpCircle } from "lucide-react";
+import { LogOut, BookOpen, Users, AlertTriangle, HelpCircle, Bell } from "lucide-react";
 import AdminArticles from "@/components/admin/AdminArticles";
 import AdminSaints from "@/components/admin/AdminSaints";
 import AdminHeresies from "@/components/admin/AdminHeresies";
 import AdminQuizQuestions from "@/components/admin/AdminQuizQuestions";
+import AdminPushNotifications from "@/components/admin/AdminPushNotifications";
 
 const tabs = [
   { key: "articles", label: "Articles", icon: BookOpen },
   { key: "saints", label: "Saints", icon: Users },
   { key: "heresies", label: "Heresies", icon: AlertTriangle },
   { key: "quiz", label: "Quiz Questions", icon: HelpCircle },
+  { key: "push", label: "Push Notifications", icon: Bell },
 ] as const;
 
 type TabKey = (typeof tabs)[number]["key"];
@@ -58,6 +60,7 @@ const AdminDashboard = () => {
         {activeTab === "saints" && <AdminSaints />}
         {activeTab === "heresies" && <AdminHeresies />}
         {activeTab === "quiz" && <AdminQuizQuestions />}
+        {activeTab === "push" && <AdminPushNotifications />}
       </div>
     </div>
   );
