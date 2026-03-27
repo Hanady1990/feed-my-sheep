@@ -33,8 +33,9 @@ function generateRound(lang: "en" | "ar") {
 }
 
 const GuessTheSaint = () => {
-  const { language, t } = useLanguage();
-  const [round, setRound] = useState(() => generateRound(language));
+  const { data: dbSaints } = useSaints();
+  const saints = dbSaints && dbSaints.length > 0 ? dbSaints : staticSaints;
+  const [round, setRound] = useState(() => generateRound(language, staticSaints));
   const [selected, setSelected] = useState<string | null>(null);
   const [score, setScore] = useState(0);
   const [total, setTotal] = useState(0);
