@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, Bookmark, Share2, BookOpen, ExternalLink } from 
 import { Button } from "@/components/ui/button";
 import ContentCard from "@/components/ContentCard";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useArticle } from "@/hooks/use-supabase-data";
 import { getArticleBySlug, getRelatedArticles, Article } from "@/data/articles";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -13,7 +14,8 @@ const ArticleDetail = () => {
   const { language, t, isRTL } = useLanguage();
   const [bookmarked, setBookmarked] = useState(false);
 
-  const article = getArticleBySlug(slug || "");
+  const { data: dbArticle } = useArticle(slug);
+  const article = dbArticle || getArticleBySlug(slug || "");
 
   if (!article) {
     return (

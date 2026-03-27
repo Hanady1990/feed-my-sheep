@@ -1,18 +1,20 @@
 import SectionHeader from "@/components/SectionHeader";
 import ContentCard from "@/components/ContentCard";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useArticles } from "@/hooks/use-supabase-data";
 import { getArticlesBySection } from "@/data/articles";
 import { Link } from "react-router-dom";
 
 const FathersPage = () => {
   const { t, language } = useLanguage();
-  const fathers = getArticlesBySection("fathers");
+  const { data: fathers } = useArticles("fathers");
+  const list = fathers && fathers.length > 0 ? fathers : getArticlesBySection("fathers");
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-6">
       <SectionHeader title={t("fathers.title")} subtitle={t("fathers.subtitle")} />
       <div className="space-y-3">
-        {fathers.map((article) => (
+        {list.map((article) => (
           <Link key={article.id} to={`/article/${article.slug}`}>
             <ContentCard gold className="cursor-pointer hover:border-gold">
               <div className="flex items-start justify-between">

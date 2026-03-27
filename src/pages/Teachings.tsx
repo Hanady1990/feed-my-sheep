@@ -2,18 +2,20 @@ import SectionHeader from "@/components/SectionHeader";
 import ContentCard from "@/components/ContentCard";
 import { BookOpen } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useArticles } from "@/hooks/use-supabase-data";
 import { getArticlesBySection } from "@/data/articles";
 import { Link } from "react-router-dom";
 
 const TeachingsPage = () => {
   const { t, language } = useLanguage();
-  const teachings = getArticlesBySection("teachings");
+  const { data: teachings } = useArticles("teachings");
+  const list = teachings && teachings.length > 0 ? teachings : getArticlesBySection("teachings");
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-6">
       <SectionHeader title={t("teachings.title")} subtitle={t("teachings.subtitle")} />
       <div className="space-y-3">
-        {teachings.map((article) => (
+        {list.map((article) => (
           <Link key={article.id} to={`/article/${article.slug}`}>
             <ContentCard gold className="cursor-pointer transition-all hover:border-gold">
               <div className="flex items-start gap-3">

@@ -1,6 +1,7 @@
 import { useState, useCallback, useMemo } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { saints } from "@/data/saints";
+import { saints as staticSaints, type Saint } from "@/data/saints";
+import { useSaints } from "@/hooks/use-supabase-data";
 import ContentCard from "@/components/ContentCard";
 import SectionHeader from "@/components/SectionHeader";
 import { Button } from "@/components/ui/button";
@@ -17,17 +18,19 @@ function shuffleArray<T>(arr: T[]): T[] {
   return a;
 }
 
-function generateRound(lang: "en" | "ar") {
-  const withPatron = saints.filter((s) => s.patronOf && s.patronOf[lang]);
+function generateRound(lang: "en" | "ar", saintsList: Saint[]) {
+  const withPatron = saintsList.filter((s) => s.patronOf && s.patronOf[lang]);
   const selected = shuffleArray(withPatron).slice(0, 4);
-  const saintsList = selected.map((s) => ({ slug: s.slug, name: s.name[lang], image: s.image }));
+  const saintsCol = selected.map((s) => ({ slug: s.slug, name: s.name[lang], image: s.image }));
   const patronsList = shuffleArray(selected.map((s) => ({ slug: s.slug, patron: s.patronOf![lang] })));
-  return { saintsList, patronsList, pairs: selected };
+  return { saintsList: saintsCol, patronsList, pairs: selected };
 }
 
 const MatchThePatron = () => {
   const { language, t } = useLanguage();
-  const [round, setRound] = useState(() => generateRound(language));
+  const { data: dbSaints } = useSaints();
+  const saints = dbSaints && dbSaints.length > 0 ? dbSaints : staticSaints;
+  const [round, setRound] = useState(() => generateRound(language, staticSaints));
   const [selectedSaint, setSelectedSaint] = useState<string | null>(null);
   const [matches, setMatches] = useState<Record<string, string>>({});
   const [wrong, setWrong] = useState<string | null>(null);
@@ -57,21 +60,21 @@ const MatchThePatron = () => {
   }, [selectedSaint, matches]);
 
   const nextRound = useCallback(() => {
-    setRound(generateRound(language));
+    setRound(generateRound(language, saints));
     setSelectedSaint(null);
     setMatches({});
     setWrong(null);
     setTotalRounds((p) => p + 1);
-  }, [language]);
+  }, [language, saints]);
 
   const resetGame = useCallback(() => {
-    setRound(generateRound(language));
+    setRound(generateRound(language, saints));
     setSelectedSaint(null);
     setMatches({});
     setWrong(null);
     setScore(0);
     setTotalRounds(0);
-  }, [language]);
+  }, [language, saints]);
 
   const matchedPatrons = useMemo(() => new Set(Object.values(matches)), [matches]);
 
