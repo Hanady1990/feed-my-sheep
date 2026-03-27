@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { saints as staticSaints } from "@/data/saints";
+import { saints as staticSaints, type Saint } from "@/data/saints";
 import { useSaints } from "@/hooks/use-supabase-data";
 import ContentCard from "@/components/ContentCard";
 import SectionHeader from "@/components/SectionHeader";
@@ -18,8 +18,8 @@ function shuffleArray<T>(arr: T[]): T[] {
   return a;
 }
 
-function generateRound(lang: "en" | "ar") {
-  const shuffled = shuffleArray(saints);
+function generateRound(lang: "en" | "ar", saintsList: Saint[]) {
+  const shuffled = shuffleArray(saintsList);
   const correct = shuffled[0];
   const options = shuffleArray([correct, ...shuffled.slice(1, 4)]);
   
@@ -33,6 +33,7 @@ function generateRound(lang: "en" | "ar") {
 }
 
 const GuessTheSaint = () => {
+  const { language, t } = useLanguage();
   const { data: dbSaints } = useSaints();
   const saints = dbSaints && dbSaints.length > 0 ? dbSaints : staticSaints;
   const [round, setRound] = useState(() => generateRound(language, staticSaints));
@@ -48,16 +49,16 @@ const GuessTheSaint = () => {
   }, [selected, round.correct.slug]);
 
   const nextRound = useCallback(() => {
-    setRound(generateRound(language));
+    setRound(generateRound(language, saints));
     setSelected(null);
-  }, [language]);
+  }, [language, saints]);
 
   const resetGame = useCallback(() => {
-    setRound(generateRound(language));
+    setRound(generateRound(language, saints));
     setSelected(null);
     setScore(0);
     setTotal(0);
-  }, [language]);
+  }, [language, saints]);
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-6">

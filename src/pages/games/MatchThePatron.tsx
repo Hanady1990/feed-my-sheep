@@ -1,6 +1,7 @@
 import { useState, useCallback, useMemo } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { saints } from "@/data/saints";
+import { saints as staticSaints, type Saint } from "@/data/saints";
+import { useSaints } from "@/hooks/use-supabase-data";
 import ContentCard from "@/components/ContentCard";
 import SectionHeader from "@/components/SectionHeader";
 import { Button } from "@/components/ui/button";
