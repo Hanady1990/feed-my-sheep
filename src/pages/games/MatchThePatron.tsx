@@ -60,7 +60,7 @@ const MatchThePatron = () => {
   }, [selectedSaint, matches]);
 
   const nextRound = useCallback(() => {
-    setRound(generateRound(language));
+    setRound(generateRound(language, saints));
     setSelectedSaint(null);
     setMatches({});
     setWrong(null);
