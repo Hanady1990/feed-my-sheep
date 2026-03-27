@@ -14,7 +14,8 @@ const ArticleDetail = () => {
   const { language, t, isRTL } = useLanguage();
   const [bookmarked, setBookmarked] = useState(false);
 
-  const article = getArticleBySlug(slug || "");
+  const { data: dbArticle } = useArticle(slug);
+  const article = dbArticle || getArticleBySlug(slug || "");
 
   if (!article) {
     return (
