@@ -70,8 +70,8 @@ const dailyMessages = {
 };
 
 async function sendWebPush(subscription: { endpoint: string; p256dh: string; auth: string }, payload: string) {
-  const vapidPublicKey = (Deno.env.get("VAPID_PUBLIC_KEY") || "").trim();
-  const vapidPrivateKey = (Deno.env.get("VAPID_PRIVATE_KEY") || "").trim();
+  const vapidPublicKey = "BMy-B34D0kZhPKN3GUHriNoCCetAji1ljnawFbRwEbEoIIOuZFakczA_lzmHIXbGbzzvG6HTRnr7Sx28WvRbDms";
+  const vapidPrivateKey = "sContFs5beDuyziT4fop07Tznj1w4ObiuH2vmOVbZz8";
 
   const url = new URL(subscription.endpoint);
   const audience = `${url.protocol}//${url.host}`;
