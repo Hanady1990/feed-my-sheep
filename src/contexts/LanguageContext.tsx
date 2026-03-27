@@ -258,6 +258,13 @@ const translations: Record<Language, Record<string, string>> = {
     "daily.psalm.desc": "Let the Psalms lift your heart to God",
     "daily.complete": "All devotions complete! God bless your day ✝",
     "daily.go": "Go →",
+
+    // Notifications
+    "notifications.title": "Push Notifications",
+    "notifications.description": "Daily spiritual reminders",
+    "notifications.enabled": "Notifications enabled! You'll receive daily reminders.",
+    "notifications.disabled": "Notifications disabled.",
+    "notifications.blocked": "Notifications are blocked. Please enable them in your browser settings.",
   },
   ar: {
     // App
@@ -504,6 +511,13 @@ const translations: Record<Language, Record<string, string>> = {
     "daily.psalm.desc": "دع المزامير ترفع قلبك إلى الله",
     "daily.complete": "أتممت جميع الأوراد! بارك الله يومك ✝",
     "daily.go": "← اذهب",
+
+    // Notifications
+    "notifications.title": "الإشعارات",
+    "notifications.description": "تذكيرات روحية يومية",
+    "notifications.enabled": "تم تفعيل الإشعارات! ستتلقى تذكيرات يومية.",
+    "notifications.disabled": "تم إيقاف الإشعارات.",
+    "notifications.blocked": "الإشعارات محظورة. يرجى تفعيلها من إعدادات المتصفح.",
   },
 };
 

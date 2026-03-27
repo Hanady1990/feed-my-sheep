@@ -1,15 +1,28 @@
 import SectionHeader from "@/components/SectionHeader";
 import ContentCard from "@/components/ContentCard";
 import { Link } from "react-router-dom";
-import { ScrollText, Users, Globe, Scale, Heart, Cross, BookmarkIcon, Share2, Languages, Moon, Sun, Download, Check, BookText, Gamepad2 } from "lucide-react";
+import { ScrollText, Users, Globe, Scale, Heart, Cross, BookmarkIcon, Share2, Languages, Moon, Sun, Download, Check, BookText, Gamepad2, Bell, BellOff, Loader2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Switch } from "@/components/ui/switch";
 import { usePwaInstall } from "@/hooks/use-pwa-install";
+import { usePushNotifications } from "@/hooks/use-push-notifications";
 import { toast } from "sonner";
 
 const MorePage = () => {
   const { t, language, setLanguage, theme, setTheme } = useLanguage();
   const { canPrompt, promptInstall, isStandalone, showIosGuide, showAndroidGuide, isInstalled } = usePwaInstall();
+  const { isSupported: pushSupported, isSubscribed: pushSubscribed, isLoading: pushLoading, permission: pushPermission, subscribe: pushSubscribe, unsubscribe: pushUnsubscribe } = usePushNotifications();
+
+  const handleNotificationToggle = async (enabled: boolean) => {
+    if (enabled) {
+      const ok = await pushSubscribe(language);
+      if (ok) toast.success(t("notifications.enabled"));
+      else if (pushPermission === "denied") toast.error(t("notifications.blocked"));
+    } else {
+      await pushUnsubscribe();
+      toast(t("notifications.disabled"));
+    }
+  };
 
   const handleInstallClick = async () => {
     if (canPrompt) {
@@ -67,6 +80,25 @@ const MorePage = () => {
             onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
           />
         </ContentCard>
+        {pushSupported && (
+          <ContentCard className="flex items-center gap-3">
+            {pushSubscribed ? <Bell className="h-5 w-5 text-gold" /> : <BellOff className="h-5 w-5 text-gold" />}
+            <div className="flex-1">
+              <span className="font-body text-sm text-foreground">{t("notifications.title")}</span>
+              <p className="font-body text-xs text-muted-foreground">{t("notifications.description")}</p>
+            </div>
+            {pushLoading ? (
+              <Loader2 className="ms-auto h-4 w-4 animate-spin text-muted-foreground" />
+            ) : (
+              <Switch
+                className="ms-auto"
+                checked={pushSubscribed}
+                onCheckedChange={handleNotificationToggle}
+                disabled={pushPermission === "denied"}
+              />
+            )}
+          </ContentCard>
+        )}
         <ContentCard
           className="flex items-center gap-3 cursor-pointer hover:border-gold-light"
           onClick={() => setLanguage(language === "en" ? "ar" : "en")}
