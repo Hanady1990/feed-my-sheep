@@ -3,18 +3,21 @@ import ContentCard from "@/components/ContentCard";
 import { Scale, ChevronRight, ChevronLeft } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useNavigate } from "react-router-dom";
-import { heresies } from "@/data/heresies";
+import { useHeresies } from "@/hooks/use-supabase-data";
+import { heresies as staticHeresies } from "@/data/heresies";
 
 const HeresiesPage = () => {
   const { t, language, isRTL } = useLanguage();
   const navigate = useNavigate();
   const Chevron = isRTL ? ChevronLeft : ChevronRight;
+  const { data: heresies } = useHeresies();
+  const list = heresies && heresies.length > 0 ? heresies : staticHeresies;
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-6">
       <SectionHeader title={t("heresies.title")} subtitle={t("heresies.subtitle")} />
       <div className="space-y-3">
-        {heresies.map((h) => (
+        {list.map((h) => (
           <ContentCard
             key={h.slug}
             className="cursor-pointer hover:border-gold-light active:scale-[0.99] transition-all"
