@@ -74,7 +74,7 @@ const MatchThePatron = () => {
     setWrong(null);
     setScore(0);
     setTotalRounds(0);
-  }, [language]);
+  }, [language, saints]);
 
   const matchedPatrons = useMemo(() => new Set(Object.values(matches)), [matches]);
 
