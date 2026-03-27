@@ -45,8 +45,8 @@ async function createJWT(privateKeyBase64: string, publicKeyBase64: string, audi
 }
 
 async function sendWebPush(subscription: { endpoint: string; p256dh: string; auth: string }, payload: string) {
-  const vapidPublicKey = Deno.env.get("VAPID_PUBLIC_KEY")!;
-  const vapidPrivateKey = Deno.env.get("VAPID_PRIVATE_KEY")!;
+  const vapidPublicKey = (Deno.env.get("VAPID_PUBLIC_KEY") || "").trim();
+  const vapidPrivateKey = (Deno.env.get("VAPID_PRIVATE_KEY") || "").trim();
   const url = new URL(subscription.endpoint);
   const audience = `${url.protocol}//${url.host}`;
   const jwt = await createJWT(vapidPrivateKey, vapidPublicKey, audience);
