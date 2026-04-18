@@ -2,6 +2,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Bookmark, Share2, BookOpen, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ContentCard from "@/components/ContentCard";
+import ShareMenu from "@/components/ShareMenu";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useArticle } from "@/hooks/use-supabase-data";
 import { getArticleBySlug, getRelatedArticles, Article } from "@/data/articles";
@@ -44,15 +45,6 @@ const ArticleDetail = () => {
     );
   };
 
-  const handleShare = async () => {
-    const url = window.location.href;
-    if (navigator.share) {
-      await navigator.share({ title, url });
-    } else {
-      await navigator.clipboard.writeText(url);
-      toast(language === "ar" ? "تم نسخ الرابط" : "Link copied to clipboard");
-    }
-  };
 
   const renderContent = (text: string) => {
     return text.split("\n\n").map((block, i) => {
@@ -148,12 +140,7 @@ const ArticleDetail = () => {
             }
           </span>
         </Button>
-        <Button variant="outline" size="sm" onClick={handleShare}>
-          <Share2 className="h-4 w-4" />
-          <span className="font-body text-xs">
-            {language === "ar" ? "مشاركة" : "Share"}
-          </span>
-        </Button>
+        <ShareMenu title={title} text={subtitle || title} />
       </div>
 
       {/* Decorative divider */}
