@@ -76,6 +76,7 @@ function mapDbArticle(row: any): Article {
     catechismRefs: (row.catechism_refs as any[]) || [],
     relatedIds: row.related_ids || [],
     tags: row.tags || [],
+    metadata: (row.metadata as any) || {},
   };
 }
 

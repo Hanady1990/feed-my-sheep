@@ -28,6 +28,11 @@ const FathersPage = () => {
                   {article.author && (
                     <p className="font-body text-xs text-muted-foreground mt-1">{article.author}</p>
                   )}
+                  {article.metadata?.era && (
+                    <p className="font-body text-[11px] text-muted-foreground/80 mt-0.5 italic">
+                      {article.metadata.era}
+                    </p>
+                  )}
                 </div>
               </div>
             </ContentCard>

@@ -3,6 +3,24 @@ export interface CatechismRef {
   text: string;
 }
 
+// Section-specific extra fields stored in `metadata` JSONB.
+// All optional; only relevant fields per section are used.
+export interface ArticleMetadata {
+  // Social
+  topicCategory?: string;
+  topicCategoryAr?: string;
+  // Papal
+  pope?: string;
+  year?: string;
+  docType?: string; // e.g. Encyclical, Exhortation
+  // Vatican news
+  newsDate?: string;
+  summary?: string;
+  summaryAr?: string;
+  // Fathers
+  era?: string;
+}
+
 export interface Article {
   id: string;
   slug: string;
@@ -19,6 +37,7 @@ export interface Article {
   catechismRefs: CatechismRef[];
   relatedIds: string[];
   tags: string[];
+  metadata?: ArticleMetadata;
 }
 
 export const articles: Article[] = [
