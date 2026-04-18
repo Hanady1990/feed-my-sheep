@@ -23,6 +23,7 @@ export type Database = {
           created_at: string
           date: string | null
           id: string
+          metadata: Json
           read_time: string | null
           related_ids: string[]
           section: string
@@ -42,6 +43,7 @@ export type Database = {
           created_at?: string
           date?: string | null
           id?: string
+          metadata?: Json
           read_time?: string | null
           related_ids?: string[]
           section: string
@@ -61,6 +63,7 @@ export type Database = {
           created_at?: string
           date?: string | null
           id?: string
+          metadata?: Json
           read_time?: string | null
           related_ids?: string[]
           section?: string
