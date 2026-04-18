@@ -19,6 +19,7 @@ import SaintsPage from "./pages/Saints";
 import SaintDetail from "./pages/SaintDetail";
 import SearchPage from "./pages/SearchPage";
 import MorePage from "./pages/More";
+import InboxPage from "./pages/Inbox";
 import ArticleDetail from "./pages/ArticleDetail";
 import CatechismPage from "./pages/Catechism";
 import GamesPage from "./pages/Games";
@@ -63,6 +64,7 @@ const App = () => (
                 <Route path="/games/match-the-patron" element={<MatchThePatron />} />
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/more" element={<MorePage />} />
+                <Route path="/inbox" element={<InboxPage />} />
                 <Route path="/article/:slug" element={<ArticleDetail />} />
               </Route>
               <Route path="/admin" element={<AdminLogin />} />

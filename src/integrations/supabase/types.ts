@@ -137,6 +137,36 @@ export type Database = {
         }
         Relationships: []
       }
+      notifications: {
+        Row: {
+          body: string
+          created_at: string
+          failed_count: number
+          id: string
+          language: string
+          sent_count: number
+          title: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          failed_count?: number
+          id?: string
+          language?: string
+          sent_count?: number
+          title: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          failed_count?: number
+          id?: string
+          language?: string
+          sent_count?: number
+          title?: string
+        }
+        Relationships: []
+      }
       push_subscriptions: {
         Row: {
           auth: string

@@ -164,11 +164,19 @@ Deno.serve(async (req) => {
 
     let sent = 0;
     let failed = 0;
+    // Track per-language stats so we can log one inbox entry per language
+    const stats: Record<"en" | "ar", { sent: number; failed: number; msg: { title: string; body: string } | null }> = {
+      en: { sent: 0, failed: 0, msg: null },
+      ar: { sent: 0, failed: 0, msg: null },
+    };
+
+    // Pick one daily message per language so all subscribers in that language get the same one
+    stats.en.msg = dailyMessages.en[Math.floor(Math.random() * dailyMessages.en.length)];
+    stats.ar.msg = dailyMessages.ar[Math.floor(Math.random() * dailyMessages.ar.length)];
 
     for (const sub of subscriptions) {
       const lang = (sub.language === "ar" ? "ar" : "en") as "en" | "ar";
-      const messages = dailyMessages[lang];
-      const msg = messages[Math.floor(Math.random() * messages.length)];
+      const msg = stats[lang].msg!;
 
       try {
         const payload = JSON.stringify({
@@ -184,16 +192,38 @@ Deno.serve(async (req) => {
 
         if (res.status === 201 || res.status === 200) {
           sent++;
+          stats[lang].sent++;
         } else if (res.status === 404 || res.status === 410) {
           await supabase.from("push_subscriptions").delete().eq("id", sub.id);
           failed++;
+          stats[lang].failed++;
         } else {
           console.error(`Push failed for ${sub.id}: ${res.status} ${responseText}`);
           failed++;
+          stats[lang].failed++;
         }
       } catch (e) {
         console.error(`Push error for ${sub.id}:`, e);
         failed++;
+        stats[lang].failed++;
+      }
+    }
+
+    // Log notifications to inbox (one entry per language that had recipients)
+    for (const lang of ["en", "ar"] as const) {
+      const s = stats[lang];
+      if ((s.sent + s.failed) > 0 && s.msg) {
+        try {
+          await supabase.from("notifications").insert({
+            title: s.msg.title,
+            body: s.msg.body,
+            language: lang,
+            sent_count: s.sent,
+            failed_count: s.failed,
+          });
+        } catch (logErr) {
+          console.error("Failed to log daily notification:", logErr);
+        }
       }
     }
 

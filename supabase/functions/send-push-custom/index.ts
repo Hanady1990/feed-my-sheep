@@ -231,6 +231,19 @@ Deno.serve(async (req) => {
       }
     }
 
+    // Log notification to inbox history
+    try {
+      await supabase.from("notifications").insert({
+        title,
+        body,
+        language: language || "all",
+        sent_count: sent,
+        failed_count: failed,
+      });
+    } catch (logErr) {
+      console.error("Failed to log notification:", logErr);
+    }
+
     return new Response(JSON.stringify({ sent, failed, total: subscriptions.length }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
