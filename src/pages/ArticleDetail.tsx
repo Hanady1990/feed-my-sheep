@@ -45,15 +45,6 @@ const ArticleDetail = () => {
     );
   };
 
-  const handleShare = async () => {
-    const url = window.location.href;
-    if (navigator.share) {
-      await navigator.share({ title, url });
-    } else {
-      await navigator.clipboard.writeText(url);
-      toast(language === "ar" ? "تم نسخ الرابط" : "Link copied to clipboard");
-    }
-  };
 
   const renderContent = (text: string) => {
     return text.split("\n\n").map((block, i) => {
