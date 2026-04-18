@@ -2,6 +2,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Bookmark, Share2, BookOpen, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ContentCard from "@/components/ContentCard";
+import ShareMenu from "@/components/ShareMenu";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useArticle } from "@/hooks/use-supabase-data";
 import { getArticleBySlug, getRelatedArticles, Article } from "@/data/articles";
