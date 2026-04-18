@@ -265,6 +265,18 @@ const translations: Record<Language, Record<string, string>> = {
     "notifications.enabled": "Notifications enabled! You'll receive daily reminders.",
     "notifications.disabled": "Notifications disabled.",
     "notifications.blocked": "Notifications are blocked. Please enable them in your browser settings.",
+
+    // Inbox
+    "inbox.title": "Notification Inbox",
+    "inbox.subtitle": "All notifications you've received",
+    "inbox.empty": "No notifications yet",
+    "inbox.emptyDescription": "Past notifications will appear here.",
+    "inbox.loading": "Loading notifications...",
+    "inbox.justNow": "Just now",
+    "inbox.minutesAgo": "min ago",
+    "inbox.hoursAgo": "h ago",
+    "inbox.daysAgo": "d ago",
+    "more.inbox": "Notification Inbox",
   },
   ar: {
     // App
@@ -518,6 +530,18 @@ const translations: Record<Language, Record<string, string>> = {
     "notifications.enabled": "تم تفعيل الإشعارات! ستتلقى تذكيرات يومية.",
     "notifications.disabled": "تم إيقاف الإشعارات.",
     "notifications.blocked": "الإشعارات محظورة. يرجى تفعيلها من إعدادات المتصفح.",
+
+    // Inbox
+    "inbox.title": "صندوق الإشعارات",
+    "inbox.subtitle": "جميع الإشعارات التي تلقيتها",
+    "inbox.empty": "لا توجد إشعارات بعد",
+    "inbox.emptyDescription": "ستظهر الإشعارات السابقة هنا.",
+    "inbox.loading": "جاري تحميل الإشعارات...",
+    "inbox.justNow": "الآن",
+    "inbox.minutesAgo": "د",
+    "inbox.hoursAgo": "س",
+    "inbox.daysAgo": "ي",
+    "more.inbox": "صندوق الإشعارات",
   },
 };
 
