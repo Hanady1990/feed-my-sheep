@@ -140,12 +140,7 @@ const ArticleDetail = () => {
             }
           </span>
         </Button>
-        <Button variant="outline" size="sm" onClick={handleShare}>
-          <Share2 className="h-4 w-4" />
-          <span className="font-body text-xs">
-            {language === "ar" ? "مشاركة" : "Share"}
-          </span>
-        </Button>
+        <ShareMenu title={title} text={subtitle || title} />
       </div>
 
       {/* Decorative divider */}
