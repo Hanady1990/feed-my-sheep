@@ -40,8 +40,8 @@ const App = () => (
       <LanguageProvider>
         <AdminProvider>
           <Sonner />
-          <PwaInstallBanner />
           <BrowserRouter>
+            <PwaInstallBanner />
             <Routes>
               <Route element={<AppLayout />}>
                 <Route path="/" element={<Index />} />
