@@ -1,7 +1,7 @@
 import SectionHeader from "@/components/SectionHeader";
 import ContentCard from "@/components/ContentCard";
 import { Link } from "react-router-dom";
-import { ScrollText, Users, Globe, Scale, Heart, Cross, BookmarkIcon, Share2, Languages, Moon, Sun, Download, Check, BookText, Gamepad2, Bell, BellOff, Loader2, Inbox } from "lucide-react";
+import { ScrollText, Users, Globe, Scale, Heart, Cross, BookmarkIcon, Share2, Languages, Moon, Sun, Download, Check, BookText, Gamepad2, Bell, BellOff, Loader2, Inbox, HandHeart } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Switch } from "@/components/ui/switch";
 import { usePwaInstall } from "@/hooks/use-pwa-install";
@@ -53,6 +53,7 @@ const MorePage = () => {
     { to: "/heresies", icon: Scale, label: t("more.heresiesThought") },
     { to: "/social", icon: Heart, label: t("more.socialTopics") },
     { to: "/saints", icon: Cross, label: t("more.saintsSpirituality") },
+    { to: "/prayers", icon: HandHeart, label: t("nav.prayers") },
     { to: "/games", icon: Gamepad2, label: t("more.games") },
   ];
 

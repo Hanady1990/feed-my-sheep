@@ -20,6 +20,9 @@ import SaintDetail from "./pages/SaintDetail";
 import SearchPage from "./pages/SearchPage";
 import MorePage from "./pages/More";
 import InboxPage from "./pages/Inbox";
+import PrayersPage from "./pages/Prayers";
+import PrayerCategoryPage from "./pages/PrayerCategory";
+import PrayerDetail from "./pages/PrayerDetail";
 import ArticleDetail from "./pages/ArticleDetail";
 import CatechismPage from "./pages/Catechism";
 import GamesPage from "./pages/Games";
@@ -65,6 +68,9 @@ const App = () => (
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/more" element={<MorePage />} />
                 <Route path="/inbox" element={<InboxPage />} />
+                <Route path="/prayers" element={<PrayersPage />} />
+                <Route path="/prayers/:category" element={<PrayerCategoryPage />} />
+                <Route path="/prayers/:category/:slug" element={<PrayerDetail />} />
                 <Route path="/article/:slug" element={<ArticleDetail />} />
               </Route>
               <Route path="/admin" element={<AdminLogin />} />
