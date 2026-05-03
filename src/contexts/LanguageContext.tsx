@@ -30,6 +30,7 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.heresies": "Heresies",
     "nav.social": "Social Topics",
     "nav.saints": "Saints",
+    "nav.prayers": "Prayers",
     "nav.catechism": "Catechism",
 
     // Home
@@ -57,6 +58,20 @@ const translations: Record<Language, Record<string, string>> = {
     "link.saints": "Saints",
     "link.heresies": "Heresies",
     "link.social": "Social",
+    "link.prayers": "Prayers",
+    "prayers.title": "Prayers",
+    "prayers.subtitle": "A treasury of Catholic prayers",
+    "prayers.count": "prayers",
+    "prayers.empty": "No prayers in this category yet.",
+    "prayers.notFound": "Prayer not found.",
+    "prayers.back": "Back to category",
+    "prayers.cat.marian": "Virgin Mary",
+    "prayers.cat.holySpirit": "Holy Spirit",
+    "prayers.cat.rosary": "The Rosary",
+    "prayers.cat.saints": "Saints' Prayers",
+    "prayers.cat.morningEvening": "Morning & Evening",
+    "prayers.cat.eucharistic": "Eucharistic",
+    "prayers.cat.general": "Traditional",
 
     // News
     "news.1.title": "Pope Francis addresses global peace summit",
@@ -295,6 +310,7 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.heresies": "البدع",
     "nav.social": "قضايا اجتماعية",
     "nav.saints": "القديسين",
+    "nav.prayers": "الصلوات",
     "nav.catechism": "التعليم المسيحي",
 
     // Home
