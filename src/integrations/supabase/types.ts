@@ -170,6 +170,51 @@ export type Database = {
         }
         Relationships: []
       }
+      prayers: {
+        Row: {
+          category: string
+          content: string
+          content_ar: string
+          created_at: string
+          id: string
+          slug: string
+          subtitle: string | null
+          subtitle_ar: string | null
+          tags: string[]
+          title: string
+          title_ar: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          content?: string
+          content_ar?: string
+          created_at?: string
+          id?: string
+          slug: string
+          subtitle?: string | null
+          subtitle_ar?: string | null
+          tags?: string[]
+          title: string
+          title_ar?: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          content?: string
+          content_ar?: string
+          created_at?: string
+          id?: string
+          slug?: string
+          subtitle?: string | null
+          subtitle_ar?: string | null
+          tags?: string[]
+          title?: string
+          title_ar?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       push_subscriptions: {
         Row: {
           auth: string
