@@ -23,7 +23,8 @@ const PrayerCategoryPage = () => {
     return <Navigate to="/prayers" replace />;
   }
 
-  const { data: items = [] } = usePrayers(category as PrayerCategory);
+  const { data: rawItems = [] } = usePrayers(category as PrayerCategory);
+  const items = rawItems.filter((p) => p.slug);
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-6">
