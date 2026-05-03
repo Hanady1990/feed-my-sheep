@@ -15,6 +15,16 @@ const empty = {
   subtitle: "", subtitle_ar: "", content: "", content_ar: "", tags: [] as string[],
 };
 
+function slugify(input: string): string {
+  return (input || "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
+}
+
 const AdminPrayers = () => {
   const { list, create, update, remove } = useAdminApi();
   const [items, setItems] = useState<any[]>([]);
@@ -45,8 +55,11 @@ const AdminPrayers = () => {
 
   const handleSave = async () => {
     try {
-      if (editing) { await update("prayers", editing.id, form); toast.success("Updated"); }
-      else { await create("prayers", form); toast.success("Created"); }
+      const finalSlug = slugify(form.slug) || slugify(form.title) || slugify(form.title_ar);
+      if (!finalSlug) { toast.error("Please enter a title or slug"); return; }
+      const payload = { ...form, slug: finalSlug };
+      if (editing) { await update("prayers", editing.id, payload); toast.success("Updated"); }
+      else { await create("prayers", payload); toast.success("Created"); }
       setOpen(false); load();
     } catch (e: any) { toast.error(e.message); }
   };
@@ -73,7 +86,7 @@ const AdminPrayers = () => {
           <DialogHeader><DialogTitle>{editing ? "Edit" : "New"} Prayer</DialogTitle></DialogHeader>
           <div className="space-y-3">
             <div className="grid grid-cols-2 gap-3">
-              <Input placeholder="Slug" value={form.slug} onChange={e => setF("slug", e.target.value)} />
+              <Input placeholder="Slug (auto from title if blank)" value={form.slug} onChange={e => setF("slug", e.target.value)} />
               <Select value={form.category} onValueChange={v => setF("category", v)}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>{PRAYER_CATEGORIES.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
