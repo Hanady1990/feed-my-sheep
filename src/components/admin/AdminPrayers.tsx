@@ -86,7 +86,7 @@ const AdminPrayers = () => {
           <DialogHeader><DialogTitle>{editing ? "Edit" : "New"} Prayer</DialogTitle></DialogHeader>
           <div className="space-y-3">
             <div className="grid grid-cols-2 gap-3">
-              <Input placeholder="Slug" value={form.slug} onChange={e => setF("slug", e.target.value)} />
+              <Input placeholder="Slug (auto from title if blank)" value={form.slug} onChange={e => setF("slug", e.target.value)} />
               <Select value={form.category} onValueChange={v => setF("category", v)}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>{PRAYER_CATEGORIES.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
