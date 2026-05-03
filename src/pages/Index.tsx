@@ -3,7 +3,7 @@ import SectionHeader from "@/components/SectionHeader";
 import SaintOfTheDay from "@/components/SaintOfTheDay";
 import BreadOfLife from "@/components/BreadOfLife";
 import DailyDevotions from "@/components/DailyDevotions";
-import { BookOpen, Users, ScrollText, Globe, Scale, Heart, Cross, Library } from "lucide-react";
+import { BookOpen, Users, ScrollText, Globe, Scale, Heart, Cross, Library, HandHeart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -16,6 +16,7 @@ const quickLinkKeys = [
   { to: "/saints", icon: Cross, labelKey: "link.saints", color: "text-gold" },
   { to: "/heresies", icon: Scale, labelKey: "link.heresies", color: "text-crimson" },
   { to: "/social", icon: Heart, labelKey: "link.social", color: "text-gold" },
+  { to: "/prayers", icon: HandHeart, labelKey: "link.prayers", color: "text-crimson" },
 ];
 
 const HomePage = () => {

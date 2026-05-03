@@ -26,7 +26,7 @@ Deno.serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
-    const validTables = ["articles", "saints", "heresies", "quiz_questions"];
+    const validTables = ["articles", "saints", "heresies", "quiz_questions", "prayers"];
     if (!validTables.includes(table)) {
       return new Response(JSON.stringify({ error: "Invalid table" }), {
         status: 400,

@@ -30,8 +30,12 @@ const ShareMenu = ({ title, text, url }: ShareMenuProps) => {
         return;
       }
     } catch (err) {
-      // user canceled or unsupported — fall through
-      if ((err as Error).name === "AbortError") return;
+      const name = (err as Error).name;
+      // user canceled or sandbox blocked — silently fall back to copy
+      if (name === "AbortError" || name === "NotAllowedError") {
+        handleCopy();
+        return;
+      }
     }
     handleCopy();
   };
