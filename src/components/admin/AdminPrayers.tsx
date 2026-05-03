@@ -55,8 +55,11 @@ const AdminPrayers = () => {
 
   const handleSave = async () => {
     try {
-      if (editing) { await update("prayers", editing.id, form); toast.success("Updated"); }
-      else { await create("prayers", form); toast.success("Created"); }
+      const finalSlug = slugify(form.slug) || slugify(form.title) || slugify(form.title_ar);
+      if (!finalSlug) { toast.error("Please enter a title or slug"); return; }
+      const payload = { ...form, slug: finalSlug };
+      if (editing) { await update("prayers", editing.id, payload); toast.success("Updated"); }
+      else { await create("prayers", payload); toast.success("Created"); }
       setOpen(false); load();
     } catch (e: any) { toast.error(e.message); }
   };
